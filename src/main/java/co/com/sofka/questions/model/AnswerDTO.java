@@ -26,7 +26,7 @@ public class AnswerDTO {
         this.answer = answer;
     }
 
-    public Integer getPosition() {
+    public Integer position() {
         return Optional.ofNullable(position).orElse(1);
     }
 
@@ -35,7 +35,7 @@ public class AnswerDTO {
     }
 
 
-    public String getUserId() {
+    public String userId() {
         return userId;
     }
 
@@ -43,7 +43,7 @@ public class AnswerDTO {
         this.userId = userId;
     }
 
-    public String getQuestionId() {
+    public String questionId() {
         return questionId;
     }
 
@@ -51,7 +51,7 @@ public class AnswerDTO {
         this.questionId = questionId;
     }
 
-    public String getAnswer() {
+    public String answer() {
         return answer;
     }
 
@@ -74,7 +74,7 @@ public class AnswerDTO {
 
     @Override
     public String toString() {
-        return "AnswerDTO{" +
+        return "AnswerDTO {" +
                 "userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +

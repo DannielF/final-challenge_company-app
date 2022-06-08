@@ -22,7 +22,7 @@ public class CreateUseCase implements SaveQuestion {
     public Mono<String> apply(QuestionDTO newQuestion) {
         return questionRepository
                 .save(mapperUtils.mapperToQuestion(null).apply(newQuestion))
-                .map(Question::getId);
+                .map(Question::id);
     }
 
 }

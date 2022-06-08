@@ -14,10 +14,10 @@ public class MapperUtils {
     public Function<AnswerDTO, Answer> mapperToAnswer() {
         return updateAnswer -> {
             var answer = new Answer();
-            answer.setPosition(updateAnswer.getPosition());
-            answer.setQuestionId(updateAnswer.getQuestionId());
-            answer.setUserId(updateAnswer.getUserId());
-            answer.setAnswer(updateAnswer.getAnswer());
+            answer.setPosition(updateAnswer.position());
+            answer.setQuestionId(updateAnswer.questionId());
+            answer.setUserId(updateAnswer.userId());
+            answer.setAnswer(updateAnswer.answer());
             return answer;
         };
     }
@@ -26,30 +26,30 @@ public class MapperUtils {
         return updateQuestion -> {
             var question = new Question();
             question.setId(id);
-            question.setUserId(updateQuestion.getUserId());
-            question.setCategory(updateQuestion.getCategory());
-            question.setQuestion(updateQuestion.getQuestion());
-            question.setUserId(updateQuestion.getUserId());
-            question.setType(updateQuestion.getType());
+            question.setUserId(updateQuestion.userId());
+            question.setCategory(updateQuestion.category());
+            question.setQuestion(updateQuestion.question());
+            question.setUserId(updateQuestion.userId());
+            question.setType(updateQuestion.type());
             return question;
         };
     }
 
     public Function<Question, QuestionDTO> mapEntityToQuestion() {
         return entity -> new QuestionDTO(
-                entity.getId(),
-                entity.getUserId(),
-                entity.getQuestion(),
-                entity.getType(),
-                entity.getCategory()
+                entity.id(),
+                entity.userId(),
+                entity.question(),
+                entity.type(),
+                entity.category()
         );
     }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
         return entity -> new AnswerDTO(
-                entity.getId(),
-                entity.getUserId(),
-                entity.getAnswer()
+                entity.id(),
+                entity.userId(),
+                entity.answer()
         );
     }
 }

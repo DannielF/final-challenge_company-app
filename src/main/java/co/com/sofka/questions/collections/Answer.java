@@ -12,7 +12,7 @@ public class Answer {
     private String answer;
     private Integer position;
 
-    public Integer getPosition() {
+    public Integer position() {
         return position;
     }
 
@@ -20,7 +20,7 @@ public class Answer {
         this.position = position;
     }
 
-    public String getId() {
+    public String id() {
         return id;
     }
 
@@ -28,7 +28,7 @@ public class Answer {
         this.id = id;
     }
 
-    public String getUserId() {
+    public String userId() {
         return userId;
     }
 
@@ -36,7 +36,7 @@ public class Answer {
         this.userId = userId;
     }
 
-    public String getQuestionId() {
+    public String questionId() {
         return questionId;
     }
 
@@ -44,7 +44,7 @@ public class Answer {
         this.questionId = questionId;
     }
 
-    public String getAnswer() {
+    public String answer() {
         return answer;
     }
 

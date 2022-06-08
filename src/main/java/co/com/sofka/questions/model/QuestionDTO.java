@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class QuestionDTO {
     private String id;
-    @NotBlank
+    @NotBlank(message = "There must be an id")
     private String userId;
     @NotBlank
     private String question;
@@ -39,7 +39,7 @@ public class QuestionDTO {
         this.category = category;
     }
 
-    public List<AnswerDTO> getAnswers() {
+    public List<AnswerDTO> listAnswers() {
         this.answers = Optional.ofNullable(answers).orElse(new ArrayList<>());
         return answers;
     }
@@ -48,7 +48,7 @@ public class QuestionDTO {
         this.answers = answers;
     }
 
-    public String getId() {
+    public String id() {
         return id;
     }
 
@@ -56,7 +56,7 @@ public class QuestionDTO {
         this.id = id;
     }
 
-    public String getUserId() {
+    public String userId() {
         return userId;
     }
 
@@ -64,7 +64,7 @@ public class QuestionDTO {
         this.userId = userId;
     }
 
-    public String getQuestion() {
+    public String question() {
         return question;
     }
 
@@ -72,7 +72,7 @@ public class QuestionDTO {
         this.question = question;
     }
 
-    public String getType() {
+    public String type() {
         return type;
     }
 
@@ -80,7 +80,7 @@ public class QuestionDTO {
         this.type = type;
     }
 
-    public String getCategory() {
+    public String category() {
         return category;
     }
 
@@ -90,7 +90,7 @@ public class QuestionDTO {
 
     @Override
     public String toString() {
-        return "QuestionDTO{" +
+        return "QuestionDTO {" +
                 "id='" + id + '\'' +
                 ", userId='" + userId + '\'' +
                 ", question='" + question + '\'' +

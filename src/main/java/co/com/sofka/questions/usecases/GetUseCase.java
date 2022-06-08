@@ -34,7 +34,7 @@ public class GetUseCase implements Function<String, Mono<QuestionDTO>> {
     private Function<QuestionDTO, Mono<QuestionDTO>> mapQuestionAggregate() {
         return questionDTO ->
                 Mono.just(questionDTO).zipWith(
-                        answerRepository.findAllByQuestionId(questionDTO.getId())
+                        answerRepository.findAllByQuestionId(questionDTO.id())
                                 .map(mapperUtils.mapEntityToAnswer())
                                 .collectList(),
                         (question, answers) -> {
