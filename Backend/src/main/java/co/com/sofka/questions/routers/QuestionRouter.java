@@ -2,12 +2,7 @@ package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.usecases.AddAnswerUseCase;
-import co.com.sofka.questions.usecases.CreateUseCase;
-import co.com.sofka.questions.usecases.DeleteUseCase;
-import co.com.sofka.questions.usecases.GetUseCase;
-import co.com.sofka.questions.usecases.ListUseCase;
-import co.com.sofka.questions.usecases.OwnerListUseCase;
+import co.com.sofka.questions.usecases.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,10 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -95,14 +87,23 @@ public class QuestionRouter {
                         )
         );
     }
-
     @Bean
-    public RouterFunction<ServerResponse> delete(DeleteUseCase deleteUseCase) {
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
+
+            responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+            })}))
+    public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
         return route(
-                DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse.accepted()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
+                PUT("/updateQuestion").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(QuestionDTO.class)
+                        .flatMap(questionUpdate -> updateUseCase.apply(questionUpdate)
+                                .flatMap(result -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result)
+                                )
+                        )
         );
     }
 }
+
+
