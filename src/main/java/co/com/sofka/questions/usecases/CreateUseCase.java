@@ -19,10 +19,9 @@ public class CreateUseCase implements SaveQuestion {
     }
 
     @Override
-    public Mono<String> apply(QuestionDTO newQuestion) {
+    public Mono<Question> apply(QuestionDTO newQuestion) {
         return questionRepository
-                .save(mapperUtils.mapperToQuestion(null).apply(newQuestion))
-                .map(Question::id);
+                .save(mapperUtils.mapperToQuestion(null).apply(newQuestion));
     }
 
 }
