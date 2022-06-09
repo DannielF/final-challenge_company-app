@@ -27,15 +27,14 @@ public class MapperUtils {
             var question = new Question();
             question.setId(id);
             question.setUserId(updateQuestion.userId());
-            question.setCategory(updateQuestion.category());
             question.setQuestion(updateQuestion.question());
-            question.setUserId(updateQuestion.userId());
             question.setType(updateQuestion.type());
+            question.setCategory(updateQuestion.category());
             return question;
         };
     }
 
-    public Function<Question, QuestionDTO> mapEntityToQuestion() {
+    public Function<Question, QuestionDTO> mapEntityToQuestion(Question question) {
         return entity -> new QuestionDTO(
                 entity.id(),
                 entity.userId(),
@@ -49,7 +48,8 @@ public class MapperUtils {
         return entity -> new AnswerDTO(
                 entity.id(),
                 entity.userId(),
-                entity.answer()
+                entity.answer(),
+                entity.created()
         );
     }
 }

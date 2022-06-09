@@ -3,6 +3,8 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+
 @Document
 public class Answer {
     @Id
@@ -11,6 +13,24 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
+    private Instant created;
+    private Instant updated;
+
+    public Instant created() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant updated() {
+        return updated;
+    }
+
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
+    }
 
     public Integer position() {
         return position;

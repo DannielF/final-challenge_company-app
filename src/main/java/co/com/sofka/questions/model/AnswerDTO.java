@@ -2,28 +2,50 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
 public class AnswerDTO {
-    @NotBlank(message = "Debe existir el userId para este objeto")
+    @NotBlank(message = "There must be an id for this answer")
     private String userId;
     @NotBlank
     private String questionId;
     @NotBlank
     private String answer;
-
     private Integer position;
+    private Instant created;
+    private Instant updated;
 
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer) {
+    public AnswerDTO(@NotBlank String questionId,
+                     @NotBlank String userId,
+                     @NotBlank String answer,
+                     @NotBlank Instant created) {
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
+        this.created = created;
+    }
+
+    public Instant created() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant updated() {
+        return updated;
+    }
+
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
     }
 
     public Integer position() {
@@ -78,6 +100,9 @@ public class AnswerDTO {
                 "userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
+                ", position=" + position +
+                ", created=" + created +
+                ", updated=" + updated +
                 '}';
     }
 }
