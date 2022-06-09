@@ -34,7 +34,7 @@ public class MapperUtils {
         };
     }
 
-    public Function<Question, QuestionDTO> mapEntityToQuestion(Question question) {
+    public Function<Question, QuestionDTO> mapEntityToQuestion() {
         return entity -> new QuestionDTO(
                 entity.id(),
                 entity.userId(),

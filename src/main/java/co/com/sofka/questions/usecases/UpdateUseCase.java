@@ -22,11 +22,10 @@ public class UpdateUseCase implements SaveQuestion {
     }
 
     @Override
-    public Mono<String> apply(QuestionDTO dto) {
+    public Mono<Question> apply(QuestionDTO dto) {
         Objects.requireNonNull(dto.id(), "Id of the question is required");
         return questionRepository
-                .save(mapperUtils.mapperToQuestion(dto.id()).apply(dto))
-                .map(Question::id);
+                .save(mapperUtils.mapperToQuestion(dto.id()).apply(dto));
     }
 
 
