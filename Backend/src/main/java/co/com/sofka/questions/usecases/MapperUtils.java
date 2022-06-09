@@ -14,10 +14,10 @@ public class MapperUtils {
     public Function<AnswerDTO, Answer> mapperToAnswer() {
         return updateAnswer -> {
             var answer = new Answer();
-            answer.setPosition(updateAnswer.position());
-            answer.setQuestionId(updateAnswer.questionId());
-            answer.setUserId(updateAnswer.userId());
-            answer.setAnswer(updateAnswer.answer());
+            answer.setPosition(updateAnswer.getPosition());
+            answer.setQuestionId(updateAnswer.getQuestionId());
+            answer.setUserId(updateAnswer.getUserId());
+            answer.setAnswer(updateAnswer.getAnswer());
             return answer;
         };
     }
@@ -26,30 +26,30 @@ public class MapperUtils {
         return updateQuestion -> {
             var question = new Question();
             question.setId(id);
-            question.setUserId(updateQuestion.userId());
-            question.setQuestion(updateQuestion.question());
-            question.setType(updateQuestion.type());
-            question.setCategory(updateQuestion.category());
+            question.setUserId(updateQuestion.getUserId());
+            question.setQuestion(updateQuestion.getQuestion());
+            question.setType(updateQuestion.getType());
+            question.setCategory(updateQuestion.getCategory());
             return question;
         };
     }
 
     public Function<Question, QuestionDTO> mapEntityToQuestion() {
         return entity -> new QuestionDTO(
-                entity.id(),
-                entity.userId(),
-                entity.question(),
-                entity.type(),
-                entity.category()
+                entity.getId(),
+                entity.getUserId(),
+                entity.getQuestion(),
+                entity.getType(),
+                entity.getCategory()
         );
     }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
         return entity -> new AnswerDTO(
-                entity.id(),
-                entity.userId(),
-                entity.answer(),
-                entity.created()
+                entity.getId(),
+                entity.getUserId(),
+                entity.getAnswer(),
+                entity.getCreated()
         );
     }
 }

@@ -35,10 +35,10 @@ class ListUseCaseTest {
 
         StepVerifier.create(listUseCase.get())
                 .expectNextMatches(questionDTO -> {
-                    assert questionDTO.userId().equals("xxxx-xxxx");
-                    assert questionDTO.category().equals("software");
-                    assert questionDTO.question().equals("¿Que es java?");
-                    assert questionDTO.type().equals("tech");
+                    assert questionDTO.getUserId().equals("xxxx-xxxx");
+                    assert questionDTO.getCategory().equals("software");
+                    assert questionDTO.getQuestion().equals("¿Que es java?");
+                    assert questionDTO.getType().equals("tech");
                     return true;
                 })
                 .verifyComplete();

@@ -32,7 +32,7 @@ public class AnswerDTO {
         this.created = created;
     }
 
-    public Instant created() {
+    public Instant getCreated() {
         return created;
     }
 
@@ -40,7 +40,7 @@ public class AnswerDTO {
         this.created = created;
     }
 
-    public Instant updated() {
+    public Instant getUpdated() {
         return updated;
     }
 
@@ -48,7 +48,7 @@ public class AnswerDTO {
         this.updated = updated;
     }
 
-    public Integer position() {
+    public Integer getPosition() {
         return Optional.ofNullable(position).orElse(1);
     }
 
@@ -57,7 +57,7 @@ public class AnswerDTO {
     }
 
 
-    public String userId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -65,7 +65,7 @@ public class AnswerDTO {
         this.userId = userId;
     }
 
-    public String questionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
@@ -73,7 +73,7 @@ public class AnswerDTO {
         this.questionId = questionId;
     }
 
-    public String answer() {
+    public String getAnswer() {
         return answer;
     }
 

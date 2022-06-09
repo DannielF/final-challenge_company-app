@@ -14,7 +14,7 @@ public class Question {
     private String category;
 
 
-    public String id() {
+    public String getId() {
         return id;
     }
 
@@ -22,7 +22,7 @@ public class Question {
         this.id = id;
     }
 
-    public String userId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -30,7 +30,7 @@ public class Question {
         this.userId = userId;
     }
 
-    public String question() {
+    public String getQuestion() {
         return question;
     }
 
@@ -38,7 +38,7 @@ public class Question {
         this.question = question;
     }
 
-    public String type() {
+    public String getType() {
         return type;
     }
 
@@ -46,7 +46,7 @@ public class Question {
         this.type = type;
     }
 
-    public String category() {
+    public String getCategory() {
         return category;
     }
 

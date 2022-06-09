@@ -16,7 +16,7 @@ public class Answer {
     private Instant created;
     private Instant updated;
 
-    public Instant created() {
+    public Instant getCreated() {
         return created;
     }
 
@@ -24,7 +24,7 @@ public class Answer {
         this.created = created;
     }
 
-    public Instant updated() {
+    public Instant getUpdated() {
         return updated;
     }
 
@@ -32,7 +32,7 @@ public class Answer {
         this.updated = updated;
     }
 
-    public Integer position() {
+    public Integer getPosition() {
         return position;
     }
 
@@ -40,7 +40,7 @@ public class Answer {
         this.position = position;
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 
@@ -48,7 +48,7 @@ public class Answer {
         this.id = id;
     }
 
-    public String userId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -56,7 +56,7 @@ public class Answer {
         this.userId = userId;
     }
 
-    public String questionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
@@ -64,7 +64,7 @@ public class Answer {
         this.questionId = questionId;
     }
 
-    public String answer() {
+    public String getAnswer() {
         return answer;
     }
 

@@ -39,7 +39,7 @@ public class QuestionDTO {
         this.category = category;
     }
 
-    public List<AnswerDTO> listAnswers() {
+    public List<AnswerDTO> getAnswers() {
         this.answers = Optional.ofNullable(answers).orElse(new ArrayList<>());
         return answers;
     }
@@ -48,7 +48,7 @@ public class QuestionDTO {
         this.answers = answers;
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 
@@ -56,7 +56,7 @@ public class QuestionDTO {
         this.id = id;
     }
 
-    public String userId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -64,7 +64,7 @@ public class QuestionDTO {
         this.userId = userId;
     }
 
-    public String question() {
+    public String getQuestion() {
         return question;
     }
 
@@ -72,7 +72,7 @@ public class QuestionDTO {
         this.question = question;
     }
 
-    public String type() {
+    public String getType() {
         return type;
     }
 
@@ -80,7 +80,7 @@ public class QuestionDTO {
         this.type = type;
     }
 
-    public String category() {
+    public String getCategory() {
         return category;
     }
 
