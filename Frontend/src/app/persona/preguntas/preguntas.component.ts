@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { QuestionI } from 'src/app/models/question-i';
-import { QuestionService } from 'src/app/Service/question.service';
-import { ServiceService } from 'src/app/Service/service.service';
+import { QuestionService } from 'src/app/services/question.service';
+import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
   selector: 'app-preguntas',

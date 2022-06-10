@@ -50,6 +50,10 @@ export class QuestionService {
     return this.http.delete<void>(`${this.url}/deleteAnswer/${answerId}`);
   }
 
+                  // FALTA EL SERVICIO DE ACTUALIZA RESPUESTA //
+
+                  
+
   /*getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
     return this.http.get<QuestionI[]>(direction);
