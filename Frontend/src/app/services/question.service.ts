@@ -42,6 +42,10 @@ export class QuestionService {
     return this.http.put<QuestionI>(`${this.url}/updateQuestion`, newQuestion);
   }
 
+  public updateAnswer(newAnswer:AnswerI): Observable<AnswerI> {
+    return this.http.put<AnswerI>(`${this.url}/updateAnswer`, newAnswer);
+  }
+
   public deleteQuestionById(questionId: string): Observable<void> {
     return this.http.delete<void>(`${this.url}/deleteQuestion/${questionId}`);
   }
@@ -49,11 +53,7 @@ export class QuestionService {
   public deleteAnswerById(answerId: string): Observable<void> {
     return this.http.delete<void>(`${this.url}/deleteAnswer/${answerId}`);
   }
-
-                  // FALTA EL SERVICIO DE ACTUALIZA RESPUESTA //
-
-                  
-
+  
   /*getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
     return this.http.get<QuestionI[]>(direction);

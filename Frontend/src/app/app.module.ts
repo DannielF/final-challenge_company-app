@@ -28,13 +28,6 @@ import { EditComponent } from './paginas/edit/edit.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    PreguntasComponent,
-    NavbarComponent,
-    RegistroComponent, 
-    AnswerComponent,
-    QuestionComponent,
-    RequestionComponent,
-    EditComponent
        
   ],
   imports: [
