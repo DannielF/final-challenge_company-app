@@ -74,7 +74,7 @@ public class QuestionRouter {
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
-            requestBody = @RequestBody(required = true, description = "Insert a QuestionDTO as JSON",
+            requestBody = @RequestBody(required = true, description = "Insert a QuestionDTO",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = QuestionDTO.class))
                     })
@@ -116,7 +116,7 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer",
-            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO as JSON",
+            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AnswerDTO.class))
                     }),
@@ -138,7 +138,7 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
 
-            requestBody = @RequestBody(required = true, description = "Insert a QuestionDto as JSON",
+            requestBody = @RequestBody(required = true, description = "Insert a QuestionDto",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = QuestionDTO.class))
                     }),
