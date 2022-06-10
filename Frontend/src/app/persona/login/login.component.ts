@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, Message } from 'primeng/api';
-import { ServiceService } from 'src/app/services/service.service';
+import { MessageService } from 'primeng/api';
+import { ServiceService } from 'src/app/Service/service.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ToastrService } from 'ngx-toastr';
+import { FirebaseCodeErrorService } from 'src/app/services/firebase-code-error.service';
+
 
 @Component({
   selector: 'app-login',
@@ -10,6 +14,7 @@ import { ServiceService } from 'src/app/services/service.service';
   styleUrls: ['./login.component.scss'],
   providers: [MessageService],
 })
+
 export class LoginComponent implements OnInit {
   mostrar: Boolean = false;
   mostrar2: Boolean = false;

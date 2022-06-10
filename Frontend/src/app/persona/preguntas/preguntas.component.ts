@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { QuestionI } from 'src/app/models/question-i';
-import { QuestionService } from 'src/app/services/question.service';
-import { ServiceService } from 'src/app/services/service.service';
+import { QuestionService } from 'src/app/Service/question.service';
+import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
   selector: 'app-preguntas',
@@ -26,6 +26,7 @@ export class PreguntasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  
     this.getQuestions();
     this.traerdatos();
   }
@@ -34,8 +35,9 @@ export class PreguntasComponent implements OnInit {
     this.userLogged.subscribe(value =>{
         this.uid=value?.uid
     });
-    this.service.getPage(this.page).subscribe((data) => {
+    this.service.getAllQuestion().subscribe((data) => {
         this.questions = data;
+        this.totalQuestions = data.length;
     });
     this.service
       .getTotalPages()
@@ -68,7 +70,7 @@ export class PreguntasComponent implements OnInit {
   }
 
   traerdatos() {
-    this.userLogged.subscribe((value) => {     
+    this.userLogged.subscribe((value) => {   
       if (value?.email == undefined) {
         this.disabled = true;       
       } else {

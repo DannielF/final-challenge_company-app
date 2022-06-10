@@ -4,6 +4,6 @@ export interface AnswerI {
    questionId:string;
    answer:string;
    position:number;
-   created:string;
-   updated:string;
+   created?:string;
+   updated?:string;
 }

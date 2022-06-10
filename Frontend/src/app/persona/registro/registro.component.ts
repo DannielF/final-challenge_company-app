@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, Message } from 'primeng/api';
-import { ServiceService } from 'src/app/services/service.service';
+import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
   selector: 'app-registro',

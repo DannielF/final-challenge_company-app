@@ -6,3 +6,16 @@
 .font2{
     font-family: 'Roboto Slab', serif;
 }
+
+html, body {
+    height: 100%;
+}
+
+.form-floating {
+
+    text-align: start;
+}
+
+.errorLabel {
+    margin-left: 5px;
+}
