@@ -74,9 +74,10 @@ public class QuestionRouter {
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
-            parameters = {@Parameter(name = "QuestionDTO", description = "Create a question",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
-                    }, required = true)}
+            requestBody = @RequestBody(required = true, description = "Insert a QuestionDTO as JSON",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = QuestionDTO.class))
+                    })
     ))
     public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
         Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO -> createUseCase.apply(questionDTO)
@@ -115,9 +116,10 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer",
-            parameters = {@Parameter(name = "AnswerDTO", description = "Answer to save",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
-                    }, required = true)},
+            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO as JSON",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnswerDTO.class))
+                    }),
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
             })}
@@ -136,7 +138,7 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
 
-            requestBody = @RequestBody(required = true, description = "Enter a QuestionDto as JSON",
+            requestBody = @RequestBody(required = true, description = "Insert a QuestionDto as JSON",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = QuestionDTO.class))
                     }),
