@@ -90,12 +90,6 @@ public class QuestionRouter {
                         )
         );
     }
-
-    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
-            parameters = {@Parameter(in = ParameterIn.QUERY,
-                    name = "QuestionDTO", description = "Question to updated",
-                    schema = @Schema(implementation = QuestionDTO.class),
-                    required = true)
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question", parameters = @RequestBody(content = {}),
 
