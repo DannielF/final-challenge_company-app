@@ -39,7 +39,8 @@ class QuestionRouterTest {
         given(listService.get()).willReturn(questionDTOFlux);
         WebTestClient client = WebTestClient.bindToRouterFunction(router.getAllQuestions(listService)).build();
 
-        client.get().uri("/getAllQuestions").exchange().expectStatus().isOk();
+        client.get().uri("/getAllQuestions").exchange().expectStatus().isOk()
+                .returnResult(QuestionDTO.class).getResponseBody();
 
     }
 
