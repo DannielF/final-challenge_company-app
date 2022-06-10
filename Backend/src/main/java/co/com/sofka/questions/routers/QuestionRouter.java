@@ -2,8 +2,14 @@ package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.usecases.*;
+import co.com.sofka.questions.usecases.AddAnswerUseCase;
+import co.com.sofka.questions.usecases.CreateUseCase;
+import co.com.sofka.questions.usecases.GetUseCase;
+import co.com.sofka.questions.usecases.ListUseCase;
+import co.com.sofka.questions.usecases.OwnerListUseCase;
+import co.com.sofka.questions.usecases.UpdateUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +24,10 @@ import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.*;
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -87,9 +96,12 @@ public class QuestionRouter {
                         )
         );
     }
+
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
-
+            parameters = {@Parameter(name = "QuestionDTO", description = "Question to updated",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+                    }, required = true)},
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })}))
