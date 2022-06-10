@@ -3,33 +3,82 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, Message } from 'primeng/api';
 import { ServiceService } from 'src/app/Service/service.service';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import { ToastrService } from 'ngx-toastr';
+import { FirebaseCodeErrorService } from 'src/app/Service/firebase-code-error.service';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss'],
+  styleUrls: ['./registro.component.css'],
   providers: [MessageService],
 })
 export class RegistroComponent implements OnInit {
-  mostrar: Boolean = false;
-  val1: number = 3;
+  
+  /*mostrar: Boolean = false;
+  val1: number = 3;*/
 
-  public form: FormGroup = this.formBuilder.group({
+  registrarUsuario: FormGroup;
+  loading:boolean = false;
+
+  /*public form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     rating: ['', []],
-  });
+  }); */
 
   constructor(
-    private formBuilder: FormBuilder,
+    
+    /*private formBuilder: FormBuilder,
     private messageService: MessageService,
     private authService: ServiceService,
-    private route: Router
-  ) {}
+    private route: Router*/
+
+    private fb:FormBuilder, 
+    private afAuth:AngularFireAuth, 
+    private toastrService:ToastrService, 
+    private router:Router, 
+    private firebaseErrorService:FirebaseCodeErrorService
+  ) {
+
+    this.registrarUsuario = this.fb.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]],
+      repetirPassword: ["", Validators.required]
+    });
+  }
 
   ngOnInit(): void {}
 
-  ingresar() {
+  registrar() {
+    const email = this.registrarUsuario.value.email;
+    const password = this.registrarUsuario.value.password;
+    const repetirPassword = this.registrarUsuario.value.repetirPassword;
+    if (password != repetirPassword) {
+      this.toastrService.error("Las contraseñas deben ser las mismas", "Error");
+      return;
+    }
+
+    this.loading = true;
+    this.afAuth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      this.verificarCorreo();
+    }).catch((error) => {
+      this.loading = false;
+      this.toastrService.error(this.firebaseErrorService.codeError(error.code), 'Error');
+    });
+  }
+
+  verificarCorreo() {
+    this.afAuth.currentUser
+    .then(user => user?.sendEmailVerification())
+    .then(() => {
+      this.toastrService.info("Le enviamos un correo electrónico para su verificación", "Verificar Correo")
+      this.router.navigate(["/login"]);
+    })
+  }
+
+  /*ingresar() {
     this.mostrar = !this.mostrar;    
     this.authService
       .loginRegistre(this.form.value.email, this.form.value.password)
@@ -89,5 +138,5 @@ export class RegistroComponent implements OnInit {
 
   spinner() {
     this.mostrar = !this.mostrar;
-  }
+  }*/
 }

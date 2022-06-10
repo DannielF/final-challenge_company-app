@@ -25,6 +25,8 @@ import { AnswerComponent } from './paginas/answer/answer.component';
 import { QuestionComponent } from './paginas/question/question.component';
 import { RequestionComponent } from './paginas/requestion/requestion.component';
 import { EditComponent } from './paginas/edit/edit.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { RecuperarPasswordComponent } from './persona/recuperar-password/recuperar-password.component';
 
 
 
@@ -38,7 +40,9 @@ import { EditComponent } from './paginas/edit/edit.component';
     AnswerComponent,
     QuestionComponent,
     RequestionComponent,
-    EditComponent
+    EditComponent,
+    RecuperarPasswordComponent,
+    SpinnerComponent
        
   ],
   imports: [

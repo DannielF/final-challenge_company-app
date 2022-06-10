@@ -1,81 +1,34 @@
-<p-toast></p-toast>
-<app-navbar></app-navbar>
-<div style="text-align: right;">   
-    
-</div>
-<div class="container">    
-    <div class="card text-center">
-        <div class="card-header">
-           <B>LOGIN</B> <i class="pi pi-user" style="font-size: 1rem;margin-left: 10px;"></i>          
-            <p-progressSpinner *ngIf="mostrar" [style]="{width: '20', height: '20px'}" styleClass="custom-spinner" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>            
-        </div>
-         
-        <div class="card-body" style="margin: 20px;">
-            <form [formGroup]="form">
-                <span class="p-float-label" style="margin: 20px;">
-                    <input 
-                        id="float-input" 
-                        type="text" 
-                        formControlName="email"
-                        pInputText> 
-                    <label for="float-input">Correo</label>
-                </span>                       
-
-                
-                <span class="p-float-label" style="margin: 20px;margin-top: 30px;">
-                    
-                    <input 
-                        id="float-input" 
-                        type="password" 
-                        formControlName="password"
-                        pInputText > 
-                    <label for="float-input">Contraseña</label>
+<div class="wrapper">
+    <div *ngIf="!loading" class="body">
+        <img class="logo" src ="https://webassets.mongodb.com/_com_assets/cms/logo_baja-9r83aqmpo0.png" alt="login"/>
+        <h1>Login</h1>
+        <form (ngSubmit)="login()" [formGroup]="loginUsuario">
+            <div class="form-floating mb-3">
+                <input formControlName="email" type="email" class="form-control" placeholder="name@example.com">
+                <label>Email</label>
+                <span *ngIf="loginUsuario.get('email')?.hasError('required') && loginUsuario.get('email')?.touched" class="text-danger errorLabel">
+                    El <strong>correo</strong> es requerido 
                 </span>
-    
-                           
-                <button [disabled]="form.invalid" (click)="ingresar()" pButton pRipple type="button" label="Iniciar" class="p-button-outlined p-button-secondary" style="margin-bottom: 10px;"></button>                        
-                
-                <br>
-                      
-                 
-                <br>              
-                <p>Aun no tienes cuenta? <a href="/registro" >Registrate</a></p>   
-               
-               
-     
-            </form>           
-           
-        </div>
-        
-        <div>
-            
-        </div>        
-    </div>    
-    
-
-</div>
-<div class="container2">    
-    <button type="button" (click)="preguntasHome()" pButton pRipple label="Preguntas" class="p-button-danger mb-2"><i class="pi pi-user-edit" style="margin-top: 5px;"></i></button>     
-</div>
-
-
-
-<p-dialog header="Recuperar Contraseña" [(visible)]="displayModal" [modal]="true" [style]="{width: '20vw'}"
-    [draggable]="false" [resizable]="false">
-    <p-progressSpinner *ngIf="mostrar2" [style]="{width: '20', height: '20px'}" styleClass="custom-spinner" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
-    <p>Llegará un email si tu correo se encuentra registrado</p>
-    <form [formGroup]="form2">
-        <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
-                <input formControlName="email"  type="text" pInputText placeholder="Ejemplo01@gmail.com">         
+                <span *ngIf="loginUsuario.get('email')?.hasError('email') && loginUsuario.get('email')?.touched" class="text-danger errorLabel">
+                    El <strong>correo</strong> es inválido 
+                </span>
+                <span *ngIf="loginUsuario.get('password')?.hasError('required') && loginUsuario.get('password')?.touched" class="text-danger errorLabel">
+                    El <strong>password</strong> es requerido 
+                </span>
+                <span *ngIf="loginUsuario.get('password')?.hasError('minlength') && loginUsuario.get('password')?.touched" class="text-danger errorLabel">
+                    El <strong>password</strong> debe tener 6 caracteres 
+                </span>
             </div>
-        </div>
-        <div class="centrar">
-            <button [disabled]="form2.invalid" (click)="recuperarEmail()" pButton pRipple type="button" label="Enviar" class="p-button-outlined p-button-secondary" style="margin-top: 30px;"></button>
-
-        </div>
-    </form>
-       
-   
-</p-dialog> 
+            <div class="form-floating mb-3">
+                <input formControlName="password" type="password" class="form-control" placeholder="Password">
+                <label>Password</label>
+            </div>
+            <div class="d-grid gap-2 mb-3">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="loginUsuario.invalid">Ingresar</button>
+            </div>
+        </form>
+        <p class="mb-3">No tienes cuenta? <a routerLink="/registro">Registrar</a></p>
+        <a class="mb-3" routerLink="/recuperar-password">Recuperar contraseña</a>
+    </div>
+    <app-spinner *ngIf="loading"></app-spinner>
+</div>

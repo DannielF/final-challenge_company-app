@@ -5,42 +5,60 @@ import { MessageService } from 'primeng/api';
 import { ServiceService } from 'src/app/Service/service.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
-import { FirebaseCodeErrorService } from 'src/app/services/firebase-code-error.service';
+import { FirebaseCodeErrorService } from 'src/app/Service/firebase-code-error.service';
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.css'],
   providers: [MessageService],
 })
 
 export class LoginComponent implements OnInit {
-  mostrar: Boolean = false;
+  
+  /*mostrar: Boolean = false;
   mostrar2: Boolean = false;
   val1: number = 3;
   displayModal: boolean = false;
-  email: any = '';
+  email: any = '';*/
 
-  public form: FormGroup = this.formBuilder.group({
+  loginUsuario:FormGroup;
+  loading:boolean = false;
+
+  /*public form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(10)]],
     rating: ['', []],
   });
   public form2: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-  });
+  });*/
 
   constructor(
-    private formBuilder: FormBuilder,
+    
+    /*private formBuilder: FormBuilder,
     private messageService: MessageService,
     private authService: ServiceService,
-    private route: Router
-  ) {}
+    private route: Router*/
+
+    private fb:FormBuilder, 
+    private afAuth:AngularFireAuth, 
+    private toastrService:ToastrService, 
+    private router:Router,
+    private firebaseErrorService:FirebaseCodeErrorService
+
+  ) {
+
+    this.loginUsuario = this.fb.group({
+      email: ["",[ Validators.required, Validators.email]],
+      password: ["", Validators.required],
+    })
+  }
 
   ngOnInit(): void {}
 
-  ingresar() {
+  /*ingresar() {
     this.mostrar = !this.mostrar;
     this.authService
       .login(this.form.value.email, this.form.value.password)
@@ -62,8 +80,27 @@ export class LoginComponent implements OnInit {
 
         this.mostrar = !this.mostrar;
       });
+  }*/
+
+  login() {
+    const email = this.loginUsuario.value.email;
+    const password = this.loginUsuario.value.password;
+
+    this.loading = true;
+    this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
+      if(user.user?.emailVerified){
+        this.router.navigate(["/dashboard"]);
+      } else {
+        this.router.navigate(["/registro"])
+      }
+      
+    }).catch((error) => {
+      this.loading = false;
+      this.toastrService.error(this.firebaseErrorService.codeError(error.code), "Error");
+    });    
   }
-  ingresarGoogle() {
+
+  /*ingresarGoogle() {
     this.mostrar = !this.mostrar;       
     this.authService
       .loginGoogle(this.form.value.email, this.form.value.password)
@@ -135,5 +172,5 @@ export class LoginComponent implements OnInit {
       });
       this.mostrar2 = !this.mostrar2;
     } catch (error) {}
-  }
+  }*/
 }
