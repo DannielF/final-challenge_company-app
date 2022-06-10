@@ -125,6 +125,15 @@ class QuestionRouterTest {
 
     @Test
     void deleteQuestionById() {
+        //Arrange
+        String questionId = "1";
+        Mono<Void> monoVoid = Mono.empty();
+        given(deleteUseCase.apply(questionId)).willReturn(monoVoid);
+        //Act
+        WebTestClient client = WebTestClient.bindToRouterFunction(router.deleteQuestionById(deleteUseCase)).build();
+        //Assert
+        client.delete().uri("/deleteQuestion/{id}", 1).exchange().expectStatus().isAccepted()
+                .returnResult(Void.class).getResponseBody().subscribe();
     }
 
     @Test
