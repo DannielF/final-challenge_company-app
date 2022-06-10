@@ -52,7 +52,10 @@ public class QuestionRouter {
     @RouterOperation(operation = @Operation(operationId = "getOwnerAll", summary = "Get all questions by userId",
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
-            })}
+            })},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "Id",
+                    description = "UserId",
+                    required = true)}
     ))
     public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
         return route(
@@ -67,6 +70,14 @@ public class QuestionRouter {
     }
 
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "create", summary = "Create a question",
+            responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+            })},
+            parameters = {@Parameter(name = "QuestionDTO", description = "Create a question",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+                    }, required = true)}
+    ))
     public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
         Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO -> createUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
@@ -80,7 +91,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question", tags = {"Question"},
+    @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question",
             parameters = {
                     @Parameter(in = ParameterIn.PATH, name = "Id",
                             description = "QuestionId",
@@ -103,6 +114,14 @@ public class QuestionRouter {
     }
 
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer",
+            parameters = {@Parameter(name = "AnswerDTO", description = "Answer to save",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
+                    }, required = true)},
+            responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
+            })}
+    ))
     public RouterFunction<ServerResponse> addAnswer(AddAnswerUseCase addAnswerUseCase) {
         return route(POST("/add").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(AnswerDTO.class)
@@ -119,10 +138,9 @@ public class QuestionRouter {
             parameters = {@Parameter(name = "QuestionDTO", description = "Question to updated",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
                     }, required = true)},
-            responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
+            responses = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
-            })}, requestBody = @RequestBody(content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = QuestionDTO.class))})
+            })}
     ))
     public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
         return route(
