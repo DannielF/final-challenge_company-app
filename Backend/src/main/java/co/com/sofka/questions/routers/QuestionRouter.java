@@ -4,8 +4,11 @@ import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.usecases.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springframework.context.annotation.Bean;
@@ -87,10 +90,16 @@ public class QuestionRouter {
                         )
         );
     }
-    @Bean
-    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
 
-            responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
+            parameters = {@Parameter(in = ParameterIn.QUERY,
+                    name = "QuestionDTO", description = "Question to updated",
+                    schema = @Schema(implementation = QuestionDTO.class),
+                    required = true)
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question", parameters = @RequestBody(content = {}),
+
+            responses = {@ApiResponse(responseCode = "200",description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })}))
     public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
