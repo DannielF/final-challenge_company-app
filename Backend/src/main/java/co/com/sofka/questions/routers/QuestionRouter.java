@@ -91,7 +91,7 @@ public class QuestionRouter {
         );
     }
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question", parameters = @RequestBody(content = {}),
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
 
             responses = {@ApiResponse(responseCode = "200",description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
