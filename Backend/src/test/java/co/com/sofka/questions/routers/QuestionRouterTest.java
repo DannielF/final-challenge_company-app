@@ -111,6 +111,16 @@ class QuestionRouterTest {
 
     @Test
     void updateQuestion() {
+        //Arrange
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setId("1");
+        Mono<String> stringMono = Mono.just("1");
+        given(updateUseCase.apply(questionDTO)).willReturn(stringMono);
+        //Act
+        WebTestClient client = WebTestClient.bindToRouterFunction(router.updateQuestion(updateUseCase)).build();
+        //Assert
+        client.put().uri("/updateQuestion").exchange().expectStatus().isOk()
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
     @Test
