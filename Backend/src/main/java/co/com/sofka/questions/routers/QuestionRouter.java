@@ -39,8 +39,8 @@ public class QuestionRouter {
     @RouterOperation(operation = @Operation(operationId = "getAll", summary = "Get all questions",
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
-            })}), beanClass = ListUseCase.class, beanMethod = "getAllQuestions"
-    )
+            })}
+    ))
     public RouterFunction<ServerResponse> getAll(ListUseCase listUseCase) {
         return route(GET("/getAll"),
                 request -> ServerResponse.ok()
