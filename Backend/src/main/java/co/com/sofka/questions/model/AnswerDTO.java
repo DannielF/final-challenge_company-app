@@ -1,6 +1,8 @@
 package co.com.sofka.questions.model;
 
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 import java.util.Objects;
@@ -15,6 +17,9 @@ public class AnswerDTO {
     private String questionId;
     @NotBlank
     private String answer;
+    @Max(5)
+    @Min(1)
+    @NotBlank
     private Integer position;
     private Instant created;
     private Instant updated;
