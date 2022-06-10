@@ -6,6 +6,7 @@ import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.function.Function;
 
 @Component
@@ -18,6 +19,7 @@ public class MapperUtils {
             answer.setQuestionId(updateAnswer.getQuestionId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
+            answer.setCreated(Instant.now());
             return answer;
         };
     }

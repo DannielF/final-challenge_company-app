@@ -25,7 +25,7 @@ public class AnswerDTO {
     public AnswerDTO(@NotBlank String questionId,
                      @NotBlank String userId,
                      @NotBlank String answer,
-                     @NotBlank Instant created) {
+                    Instant created) {
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
