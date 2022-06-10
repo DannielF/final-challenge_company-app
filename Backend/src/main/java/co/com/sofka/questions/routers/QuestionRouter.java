@@ -135,15 +135,11 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
-<<<<<<< HEAD
 
-            responses = {@ApiResponse(responseCode = "200",description = "Successful", content = {
-=======
             parameters = {@Parameter(name = "QuestionDTO", description = "Question to updated",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
                     }, required = true)},
             responses = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = {
->>>>>>> master
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })}
     ))
