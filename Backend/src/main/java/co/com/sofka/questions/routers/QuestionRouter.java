@@ -38,7 +38,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class QuestionRouter {
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions",
+    @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions", tags = "Questions",
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })}
@@ -53,6 +53,7 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestionsUserId", summary = "Get all questions by userId",
+            tags = "Questions",
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
@@ -73,7 +74,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "create", summary = "Create a question",
+    @RouterOperation(operation = @Operation(operationId = "create", summary = "Create a question", tags = "Questions",
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
@@ -95,7 +96,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question",
+    @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question", tags = "Questions",
             parameters = {
                     @Parameter(in = ParameterIn.PATH, name = "id",
                             description = "Question Id",
@@ -118,7 +119,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer",
+    @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer", tags = "Answers",
             requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AnswerDTO.class))
@@ -139,7 +140,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "updateQuestion", summary = "Update a question",
+    @RouterOperation(operation = @Operation(operationId = "updateQuestion", summary = "Update a question", tags = "Questions",
 
             requestBody = @RequestBody(required = true, description = "Insert a QuestionDto",
                     content = {@Content(mediaType = "application/json",
@@ -162,7 +163,7 @@ public class QuestionRouter {
     }
 
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "updateAnswer", summary = "Update an answer",
+    @RouterOperation(operation = @Operation(operationId = "updateAnswer", summary = "Update an answer", tags = "Answers",
 
             requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
                     content = {@Content(mediaType = "application/json",
@@ -185,6 +186,7 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "deleteQuestionById", summary = "Remove a question by its id",
+            tags = "Questions",
             responses = {@ApiResponse(responseCode = "200", description = "Question removed", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
@@ -203,6 +205,7 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "deleteAnswerById", summary = "Remove an answer by its id",
+            tags = "Answers",
             responses = {@ApiResponse(responseCode = "200", description = "Answer removed", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
             })},
