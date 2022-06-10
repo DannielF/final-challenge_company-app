@@ -135,6 +135,7 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "update", summary = "Update a question",
+
             parameters = {@Parameter(name = "QuestionDTO", description = "Question to updated",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
                     }, required = true)},
