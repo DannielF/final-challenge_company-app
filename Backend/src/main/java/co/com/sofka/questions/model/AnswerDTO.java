@@ -28,12 +28,14 @@ public class AnswerDTO {
                      @NotBlank String questionId,
                      @NotBlank String userId,
                      @NotBlank String answer,
-                     Instant created) {
+                     Instant created,
+                     Instant updated) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.created = created;
+        this.updated = updated;
     }
 
     public String getId() {

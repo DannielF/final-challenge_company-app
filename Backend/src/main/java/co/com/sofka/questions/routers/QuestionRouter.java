@@ -161,6 +161,27 @@ public class QuestionRouter {
         );
     }
 
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "updateAnswer", summary = "Update an answer",
+
+            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnswerDTO.class))
+                    }),
+            responses = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
+            })}
+    ))
+    public RouterFunction<ServerResponse> updateAnswer(UpdateUseCase updateUseCase) {
+        return route(
+                PUT("/updateAnswer").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(updateUseCase::updateAnswer)
+                        .flatMap(result -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(result))
+        );
+    }
+
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "deleteQuestionById", summary = "Remove a question by its id",

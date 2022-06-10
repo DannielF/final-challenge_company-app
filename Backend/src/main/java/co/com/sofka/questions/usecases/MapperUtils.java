@@ -20,7 +20,8 @@ public class MapperUtils {
             answer.setQuestionId(updateAnswer.getQuestionId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
-            answer.setCreated(Instant.now());
+            answer.setCreated(updateAnswer.getCreated());
+            answer.setUpdated(updateAnswer.getUpdated());
             return answer;
         };
     }
@@ -53,7 +54,8 @@ public class MapperUtils {
                 entity.getQuestionId(),
                 entity.getUserId(),
                 entity.getAnswer(),
-                entity.getCreated()
+                entity.getCreated(),
+                entity.getUpdated()
         );
     }
 }
