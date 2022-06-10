@@ -10,8 +10,10 @@ import co.com.sofka.questions.usecases.OwnerListUseCase;
 import co.com.sofka.questions.usecases.UpdateUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +49,11 @@ public class QuestionRouter {
     }
 
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "getOwnerAll", summary = "Get all questions by userId",
+            responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+            })}
+    ))
     public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
         return route(
                 GET("/getOwnerAll/{userId}"),
@@ -73,6 +80,16 @@ public class QuestionRouter {
     }
 
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question", tags = {"Question"},
+            parameters = {
+                    @Parameter(in = ParameterIn.PATH, name = "Id",
+                            description = "QuestionId",
+                            required = true)},
+            responses = {@ApiResponse(responseCode = "200", description = "Successful",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = QuestionDTO.class))
+                    })}
+    ))
     public RouterFunction<ServerResponse> get(GetUseCase getUseCase) {
         return route(
                 GET("/get/{id}").and(accept(MediaType.APPLICATION_JSON)),
@@ -104,7 +121,9 @@ public class QuestionRouter {
                     }, required = true)},
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
-            })}))
+            })}, requestBody = @RequestBody(content = {@Content(mediaType = "application/json",
+            schema = @Schema(implementation = QuestionDTO.class))})
+    ))
     public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
         return route(
                 PUT("/updateQuestion").and(accept(MediaType.APPLICATION_JSON)),
