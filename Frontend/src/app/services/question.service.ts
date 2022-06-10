@@ -1,24 +1,56 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 import { QuestionI } from '../models/question-i';
 import { AnswerI } from '../models/answer-i';
+
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionService {
-  push(arg0: string) {
+  
+  /*push(arg0: string) {
     throw new Error('Method not implemented.');
+  }*/
+
+  private url: string = 'http://localhost:8080';
+
+  constructor(private http:HttpClient) {}
+
+  public getAllQuestion(): Observable<QuestionI[]> {
+    return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
   }
 
+  public getAllQuestionsByUserId(userId:string): Observable<QuestionI> {
+    return this.http.get<QuestionI>(`${this.url}/getAllQuestions/${userId}`);
+  }
 
-  private url: string = 'http://localhost:8080/';
+  public createQuestion(newQuestion:QuestionI): Observable<QuestionI> {
+    return this.http.post<QuestionI>(`${this.url}/createQuestion`, newQuestion);
+  }
 
+  public getQuestion(questionId:string): Observable<QuestionI> {
+    return this.http.get<QuestionI>(`${this.url}/getQuestion/${questionId}`);
+  }
 
-  constructor(private http: HttpClient) {}
+  public addAnswer(newAnswer:AnswerI): Observable<AnswerI> {
+    return this.http.post<AnswerI>(`${this.url}/addAnswer`, newAnswer);
+  }
 
-  getPage(page: number): Observable<QuestionI[]> {
+  public updateQuestion(newQuestion:QuestionI): Observable<QuestionI> {
+    return this.http.put<QuestionI>(`${this.url}/updateQuestion`, newQuestion);
+  }
+
+  public deleteQuestionById(questionId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteQuestion/${questionId}`);
+  }
+
+  public deleteAnswerById(answerId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteAnswer/${answerId}`);
+  }
+
+  /*getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
     return this.http.get<QuestionI[]>(direction);
   }
@@ -58,5 +90,5 @@ export class QuestionService {
   editQuestion(question: QuestionI): Observable<any> {
     let direction = this.url + 'update';
     return this.http.post<any>(direction, question);
-  }
+  }*/
 }
