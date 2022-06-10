@@ -1,30 +1,25 @@
 package co.com.sofka.questions.routers;
 
+import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
+import co.com.sofka.questions.usecases.AddAnswerUseCase;
 import co.com.sofka.questions.usecases.CreateUseCase;
+import co.com.sofka.questions.usecases.DeleteUseCase;
 import co.com.sofka.questions.usecases.GetUseCase;
 import co.com.sofka.questions.usecases.ListUseCase;
 import co.com.sofka.questions.usecases.OwnerListUseCase;
-import org.junit.Before;
+import co.com.sofka.questions.usecases.UpdateUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.server.RequestPredicate;
-import org.springframework.web.reactive.function.server.RequestPredicates;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static reactor.core.publisher.Mono.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,6 +36,12 @@ class QuestionRouterTest {
     public CreateUseCase createUseCase;
     @MockBean
     public GetUseCase getUseCase;
+    @MockBean
+    public AddAnswerUseCase addAnswerUseCase;
+    @MockBean
+    public DeleteUseCase deleteUseCase;
+    @MockBean
+    public UpdateUseCase updateUseCase;
 
     @Test
     void getAllQuestions() {
@@ -51,7 +52,7 @@ class QuestionRouterTest {
         WebTestClient client = WebTestClient.bindToRouterFunction(router.getAllQuestions(listService)).build();
         //Assert
         client.get().uri("/getAllQuestions").exchange().expectStatus().isOk()
-                .returnResult(QuestionDTO.class).getResponseBody();
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
     @Test
@@ -63,8 +64,8 @@ class QuestionRouterTest {
         //Act
         WebTestClient client = WebTestClient.bindToRouterFunction(router.getAllQuestionsByUserId(ownerListUseCase)).build();
         //Assert
-        client.get().uri("/getAllQuestions/{userId}",1).exchange().expectStatus().isOk()
-                .returnResult(QuestionDTO.class).getResponseBody();
+        client.get().uri("/getAllQuestions/{userId}", 1).exchange().expectStatus().isOk()
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
     @Test
@@ -78,7 +79,7 @@ class QuestionRouterTest {
         WebTestClient client = WebTestClient.bindToRouterFunction(router.createQuestion(createUseCase)).build();
         //Assert
         client.post().uri("/createQuestion").exchange().expectStatus().isOk()
-                .returnResult(QuestionDTO.class).getResponseBody();
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
 
@@ -91,12 +92,21 @@ class QuestionRouterTest {
         //Act
         WebTestClient client = WebTestClient.bindToRouterFunction(router.getQuestion(getUseCase)).build();
         //Assert
-        client.get().uri("/getQuestion/{id}",1).exchange().expectStatus().isOk()
-                .returnResult(QuestionDTO.class).getResponseBody();
+        client.get().uri("/getQuestion/{id}", 1).exchange().expectStatus().isOk()
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
     @Test
     void addAnswer() {
+        //Arrange
+        AnswerDTO answerDTOMono = new AnswerDTO();
+        Mono<QuestionDTO> questionDTOMono = Mono.just(new QuestionDTO());
+        given(addAnswerUseCase.apply(answerDTOMono)).willReturn(questionDTOMono);
+        //Act
+        WebTestClient client = WebTestClient.bindToRouterFunction(router.addAnswer(addAnswerUseCase)).build();
+        //Assert
+        client.post().uri("/addAnswer").exchange().expectStatus().isOk()
+                .returnResult(QuestionDTO.class).getResponseBody().subscribe();
     }
 
     @Test
