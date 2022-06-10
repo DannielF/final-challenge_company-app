@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class AnswerDTO {
+
+    private String id;
     @NotBlank(message = "There must be an id for this answer")
     private String userId;
     @NotBlank
@@ -22,14 +24,20 @@ public class AnswerDTO {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId,
+    public AnswerDTO(String id,
+                     @NotBlank String questionId,
                      @NotBlank String userId,
                      @NotBlank String answer,
-                    Instant created) {
+                     Instant created) {
+        this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.created = created;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Instant getCreated() {
@@ -97,7 +105,8 @@ public class AnswerDTO {
     @Override
     public String toString() {
         return "AnswerDTO {" +
-                "userId='" + userId + '\'' +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 ", position=" + position +
