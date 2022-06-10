@@ -53,8 +53,8 @@ public class QuestionRouter {
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
             })},
-            parameters = {@Parameter(in = ParameterIn.PATH, name = "Id",
-                    description = "UserId",
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "userId",
+                    description = "User Id",
                     required = true)}
     ))
     public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
@@ -94,8 +94,8 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "Get", summary = "Get a question",
             parameters = {
-                    @Parameter(in = ParameterIn.PATH, name = "Id",
-                            description = "QuestionId",
+                    @Parameter(in = ParameterIn.PATH, name = "id",
+                            description = "Question Id",
                             required = true)},
             responses = {@ApiResponse(responseCode = "200", description = "Successful",
                     content = {@Content(mediaType = "application/json",
