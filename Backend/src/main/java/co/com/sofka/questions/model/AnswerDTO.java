@@ -24,7 +24,7 @@ public class AnswerDTO {
     private Integer position;
     private Instant created;
     private Instant updated;
-
+    private String email;
 
     public AnswerDTO() {
 
@@ -44,6 +44,20 @@ public class AnswerDTO {
         this.position = position;
         this.created = created;
         this.updated = updated;
+    }
+
+    public AnswerDTO(String userId, String questionId, String answer, Integer position, Instant created, Instant updated, String email) {
+        this.userId = userId;
+        this.questionId = questionId;
+        this.answer = answer;
+        this.position = position;
+        this.created = created;
+        this.updated = updated;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getId() {
@@ -126,6 +140,7 @@ public class AnswerDTO {
                 ", position=" + position +
                 ", created=" + created +
                 ", updated=" + updated +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

@@ -2,7 +2,6 @@ package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.body_interfaces_swagger.AnswerBody;
 import co.com.sofka.questions.body_interfaces_swagger.QuestionBody;
-import co.com.sofka.questions.config.EmailServiceImpl;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.usecases.AddAnswerUseCase;
@@ -20,7 +19,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -30,7 +28,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
@@ -41,10 +38,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 
 @Configuration
 public class QuestionRouter {
-
-    @Autowired
-    private EmailServiceImpl emailService;
-    Logger log = Logger.getLogger("Router");
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions", tags = "Questions",
@@ -139,20 +132,14 @@ public class QuestionRouter {
     ))
     public RouterFunction<ServerResponse> addAnswer(AddAnswerUseCase addAnswerUseCase) {
         return route(POST("/addAnswer").and(accept(MediaType.APPLICATION_JSON)),
-                request -> {
-                    log.info("QueryParam " + request.queryParam("userEmail").orElse(""));
-                    //log.info("pathVariable "+ request.pathVariable("userEmail"));
-                    log.info("Headers "+ request.headers());
-                    log.info("QueryParams "+ request.queryParams());
-                    log.info("PathVariables "+ request.pathVariables());
-                    emailService.sendHTMLMessage("danielgranados1992@gmail.com");
-                    return request.bodyToMono(AnswerDTO.class)
-                            .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
-                                    .flatMap(result -> ServerResponse.ok()
-                                            .contentType(MediaType.APPLICATION_JSON)
-                                            .bodyValue(result))
-                            );
-                }
+                request ->
+                        request.bodyToMono(AnswerDTO.class)
+                                .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
+                                        .flatMap(result -> ServerResponse.ok()
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .bodyValue(result))
+                                )
+
         );
     }
 
