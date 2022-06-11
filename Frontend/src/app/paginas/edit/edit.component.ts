@@ -12,7 +12,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
+  styleUrls: ['./edit.component.scss'],
   providers: [MessageService],
 })
 export class EditComponent implements OnInit {

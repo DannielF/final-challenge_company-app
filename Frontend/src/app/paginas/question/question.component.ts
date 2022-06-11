@@ -13,7 +13,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css'],
+  styleUrls: ['./question.component.scss'],
   providers: [MessageService],
 })
 export class QuestionComponent implements OnInit {

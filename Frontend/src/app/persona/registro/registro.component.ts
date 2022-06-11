@@ -10,7 +10,7 @@ import { FirebaseCodeErrorService } from 'src/app/Service/firebase-code-error.se
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css'],
+  styleUrls: ['./registro.component.scss'],
   providers: [MessageService],
 })
 export class RegistroComponent implements OnInit {

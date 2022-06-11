@@ -8,7 +8,7 @@ import { FirebaseCodeErrorService } from 'src/app/Service/firebase-code-error.se
 @Component({
   selector: 'app-recuperar-password',
   templateUrl: './recuperar-password.component.html',
-  styleUrls: ['./recuperar-password.component.css']
+  styleUrls: ['./recuperar-password.component.scss']
 })
 export class RecuperarPasswordComponent implements OnInit {
 

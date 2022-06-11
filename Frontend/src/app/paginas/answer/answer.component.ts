@@ -11,7 +11,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
-  styleUrls: ['./answer.component.css'],
+  styleUrls: ['./answer.component.scss'],
   providers: [MessageService],
 })
 export class AnswerComponent implements OnInit {
