@@ -55,7 +55,6 @@ export class QuestionService {
     console.log(newAnswer);
     return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {
       observe: 'body',
-      params: userEmail,
     });
   }
 

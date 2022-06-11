@@ -46,10 +46,8 @@ export class AnswerComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
       if(user?.email == undefined) {
-        console.log(user?.email);
         this.route.navigate(['preguntas'])
       } else {
-        console.log(user?.email);
         this.userEmail = user.email;
       }
     });

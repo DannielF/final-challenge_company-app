@@ -16,16 +16,11 @@ import { Router } from '@angular/router';
 export class RequestionComponent implements OnInit {
   
   question:QuestionI | undefined;
+  questions: QuestionI[] | undefined;
   answers: AnswerI[] | undefined;
   answersNew: AnswerI[]=[];
-  currentAnswer:number=0;
-
-  mean:number = 0;
-  userIdQuestion:string = "";
-
-  questions: QuestionI[] | undefined;
   page: number = 0;
-
+  
   answer: AnswerI = {
     userId: '',
     questionId: '',
@@ -33,7 +28,13 @@ export class RequestionComponent implements OnInit {
     position: 0,
   };
   
+  mean:number = 0;
+  userIdQuestion:string = "";
+  currentAnswer:number=0;
+  id:string | undefined;
+
   constructor(
+    
     private modalService: NgbModal,
     private route:ActivatedRoute,
     private questionService:QuestionService,
@@ -41,38 +42,57 @@ export class RequestionComponent implements OnInit {
     private authService: ServiceService,
     private toastr:ToastrService,
     private router:Router
-    
-
     ) {
-      this.userIdQuestion = this.route.snapshot.params['id'];
       
+      this.userIdQuestion = this.route.snapshot.params['id'];
     }
-
-  id:string | undefined;
 
   ngOnInit(): void {
     
     const id = this.route.snapshot.paramMap.get('id');
-    //console.log(this.authService.userData);
-    //console.log(this.accion);
-    
     this.getQuestions(`${id}`);
     this.get2();
     this.meanAnswer(`${id}`);
-    //this.confirm(`${id}`);
   }
 
   openVerticallyCentered(content: any) {
+
     this.modalService.open(content, { centered: true });
+  }
+  
+  get2(){
+
+    let id = this.route.snapshot.paramMap.get('id');
+    this.service.getAnswer(id).subscribe((data) => {  
+          this.answers = data.answers;
+    });
+  }
+
+  getQuestions(id:string):void{
+
+    this.questionService.getQuestion(id).subscribe(data=>{
+      this.question=data;
+      this.answers = data.answers;
+      this.answers.sort((a, b) => (a.position > b.position ? -1 : 1));
+    })
+  }
+
+  AddAnwsers(index:number) {
+
+    let last=this.currentAnswer+index;
+    for(let i = this.currentAnswer;i<last;i++){
+    }
+    this.currentAnswer+=10;
   }
 
   updateAnswer(answer:AnswerI){
+
     this.service.updateAnswer(answer).subscribe(
       response => {
         this.toastr.success('Respuesta Actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        window.location.reload;
+        this.reloadCurrentPage();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {
@@ -81,33 +101,31 @@ export class RequestionComponent implements OnInit {
       }
     );
   }
-  
-  get2(){
-    let id = this.route.snapshot.paramMap.get('id');
-    
 
-    this.service.getAnswer(id).subscribe((data) => {  
-          this.answers = data.answers;
-    });
+  eliminar(id:any) {
+
+    this.questionService.deleteAnswerById(id).subscribe(
+      response => {
+        this.toastr.success("Respuesta eliminado", 'OK',{
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        this.reloadCurrentPage();
+    },
+      err => {
+        this.toastr.error(err.error.mensaje, 'Fail', {
+          timeOut: 3000,  positionClass: 'toast-top-center',
+        });
+      })
   }
 
-  getQuestions(id:string):void{
-    this.questionService.getQuestion(id).subscribe(data=>{
-      this.question=data;
-      this.answers = data.answers;
-      this.answers.sort((a, b) => (a.position > b.position ? -1 : 1));
-    })
+  reloadCurrentPage() {
 
-  }
-
-  AddAnwsers(index:number) {
-    let last=this.currentAnswer+index;
-    for(let i = this.currentAnswer;i<last;i++){
-    }
-    this.currentAnswer+=10;
-  }
+    window.location.reload();
+   }
 
   meanAnswer(id:string) {
+
     this.questionService.getQuestion(id).subscribe((question) => {
       this.userIdQuestion = question.userId;
       let answers = question.answers;
@@ -124,26 +142,6 @@ export class RequestionComponent implements OnInit {
 
       }
     });
-  }
-
-  eliminar(id:any) {
-    this.questionService.deleteAnswerById(id).subscribe(
-      response => {
-        console.log(id);
-        this.toastr.success("Respuesta eliminado", 'OK',{
-          timeOut: 3000,
-          positionClass: 'toast-top-center'
-        });
-        window.location.reload();
-    },
-      err => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000,  positionClass: 'toast-top-center',
-        });
-      })
-  }
-  editar() {
-
   }
 
   onScroll() {
