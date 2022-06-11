@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class EmailServiceImpl {
 
 
-    private static final String MESSAGE = "One question has been update click to see it.";
+    private static final String MESSAGE = "One question has been update click to see it. http://localhost:4200/question/";
     private static final String SUBJECT = "Someone has answer your question";
     private final JavaMailSender emailSender;
     Logger log = Logger.getLogger("EmailService");
@@ -53,7 +53,7 @@ public class EmailServiceImpl {
         }
     }
 
-    public void sendHTMLMessage(String to) {
+    public void sendHTMLMessage(String to, String questionId) {
         MimeMessage msg = emailSender.createMimeMessage();
 
         try {
@@ -62,7 +62,7 @@ public class EmailServiceImpl {
             helper.setTo(to);
             helper.setSubject(SUBJECT);
             String template = getDefaultTemplate();
-            template = template.replace("{text}", MESSAGE);
+            template = template.replace("{text}", MESSAGE+questionId);
             helper.setText(MESSAGE, template);
             emailSender.send(msg);
             log.info(msg.toString());
