@@ -108,7 +108,7 @@ public class QuestionRouter {
     ))
     public RouterFunction<ServerResponse> getQuestion(GetUseCase getUseCase) {
         return route(
-                GET("/getQuestion/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("/getQuestion/{id}" ).and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(getUseCase.apply(

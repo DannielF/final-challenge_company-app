@@ -35,10 +35,13 @@ export class AnswerComponent implements OnInit {
   ) {}
 
   answer: AnswerI = {
+    id: "",
     userId: '',
     questionId: '',
     answer: '',
     position: 0,
+    created:"jajaja",
+    updated:"jojojo"
   };
 
   ngOnInit(): void {}
@@ -50,8 +53,10 @@ export class AnswerComponent implements OnInit {
   saveAnswer(): void {
     this.answer.userId = this.item.userId;
     this.answer.questionId = this.item.id;
+    console.log(this.answer);
     this.services.saveAnswer(this.answer).subscribe({
       next: (v) => {
+        console.log(v);
         if(v){
           this.modalService.dismissAll();
           this.messageService.add({
@@ -64,13 +69,15 @@ export class AnswerComponent implements OnInit {
          }, 1000);
         }        
       },
-      error: (e) =>
+      error: (e) => {  
+      console.log(e);
       this.messageService.add({
         severity: 'error',
         summary: 'Rectifique los datos',
         detail: '(Campos Vacios)-Intente de Nuevo',
-      }),
+      })},
       complete: () => console.info('complete'),
     });
+  
   }
 }

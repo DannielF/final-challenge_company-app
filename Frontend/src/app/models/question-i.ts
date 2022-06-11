@@ -1,11 +1,11 @@
 import { AnswerI } from "./answer-i";
 
 export interface QuestionI {
-   id:string;
+    id:string;
     userId:string;
     question:string;
     type:string;
     category:string;
-    answers:[AnswerI];
-    start:string;
+    answers:[];
+    start?:string;
 }

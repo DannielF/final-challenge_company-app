@@ -17,8 +17,9 @@ import { ServiceService } from 'src/app/Service/service.service';
   providers: [MessageService],
 })
 export class QuestionComponent implements OnInit {
+  
   answers: AnswerI[] | undefined;
-  question: answe = {
+  question: QuestionI = {
     id:
       this.authService.userData.uid == undefined
         ? ''
@@ -30,8 +31,7 @@ export class QuestionComponent implements OnInit {
     question: '',
     type: '',
     category: '',
-    answers:[null],
-    start: '2'
+    answers:[]
   };
 
   constructor(
@@ -50,10 +50,12 @@ export class QuestionComponent implements OnInit {
   }
 
   saveQuestion(question: QuestionI): void {
+    console.log(question);
     if(question.type && question.category){    
      this.modalService.dismissAll();
      this.services.saveQuestion(question).subscribe({
-       next: (v) => {       
+       next: (v) => { 
+        console.log(v)      
          if (v) {
            this.messageService.add({
              severity: 'success',

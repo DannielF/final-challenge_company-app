@@ -41,16 +41,16 @@ export class QuestionService {
     return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
   }
 
-  public saveQuestion(newQuestion:QuestionI): Observable<QuestionI> {
-    return this.http.post<QuestionI>(`${this.url}/createQuestion`, newQuestion);
+  public saveQuestion(newQuestion:QuestionI): Observable<String> {
+    return this.http.post(`${this.url}/createQuestion`, newQuestion, {responseType: 'text'});
   }
 
   public getQuestion(questionId:string): Observable<QuestionI> {
     return this.http.get<QuestionI>(`${this.url}/getQuestion/${questionId}`);
   }
 
-  public saveAnswer(newAnswer:AnswerI): Observable<AnswerI> {
-    return this.http.post<AnswerI>(`${this.url}/addAnswer`, newAnswer);
+  public saveAnswer(newAnswer:AnswerI): Observable<any> {
+    return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {observe: "body"});
   }
 
   public editQuestion(newQuestion:QuestionI): Observable<QuestionI> {

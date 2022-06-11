@@ -20,14 +20,14 @@ export class EditComponent implements OnInit {
   userLogged = this.authService.getUserLogged();
   answers: AnswerI[] | undefined;
   @Input() idanswer: any='';
-  question: answe = {
+  question: QuestionI = {
     id:'',
     userId:'',
     question: '',
     type: '',
     category: '',
-    answers:[null],
-    start: '2'
+    answers:[],
+
   };
 
   constructor(

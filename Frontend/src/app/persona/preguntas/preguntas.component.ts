@@ -28,7 +28,8 @@ export class PreguntasComponent implements OnInit {
   ngOnInit(): void {
   
     this.getQuestions();
-    this.traerdatos();
+    this.cargarProducto();
+    //this.traerdatos();
   }
 
   getQuestions(): void {
@@ -76,6 +77,12 @@ export class PreguntasComponent implements OnInit {
       } else {
         this.disabled = false;     
       }
+    });
+  }
+  cargarProducto(): void {
+
+    this.service.getAllQuestion().subscribe(datos => {
+      this.questions = Object.values(datos);
     });
   }
 }
