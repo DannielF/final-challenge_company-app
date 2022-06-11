@@ -59,8 +59,8 @@
               <p style="margin-left: 3px">{{ questions.answer}}</p>  
               <p style="margin-left: 3px" *ngIf="questions.updated;else dataCreated"> fecha actualización: {{ questions.updated | date }}</p> 
               <ng-template #dataCreated><p style="margin-left: 3px"> fecha creación: {{questions.created | date }}</p></ng-template>         
-              <button *ngIf="authService.userData" style="margin-left: 3px; margin-right: 3px;" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"> editar</i></button>
-              <button *ngIf="authService.userData"class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i> eliminar</button>
+              <button *ngIf="authService.userData == id" style="margin-left: 3px; margin-right: 3px;" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"> editar</i></button>
+              <button *ngIf="authService.userData == id"class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i> eliminar</button>
               <div class="accordion-body">
                 <strong></strong> 
               </div>

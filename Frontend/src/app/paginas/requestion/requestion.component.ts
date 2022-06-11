@@ -40,6 +40,8 @@ export class RequestionComponent implements OnInit {
     this.getQuestions(`${id}`);
     this.get2();
     this.meanAnswer(`${id}`)
+    console.log(id);
+    
        
   }
   
