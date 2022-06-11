@@ -1,5 +1,7 @@
 package co.com.sofka.questions.routers;
 
+import co.com.sofka.questions.body_interfaces_swagger.AnswerBody;
+import co.com.sofka.questions.body_interfaces_swagger.QuestionBody;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.usecases.AddAnswerUseCase;
@@ -40,7 +42,7 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions", tags = "Questions",
             responses = {@ApiResponse(responseCode = "200", description = "Successful", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionBody.class))
             })}
     ))
     public RouterFunction<ServerResponse> getAllQuestions(ListUseCase listUseCase) {
@@ -76,11 +78,11 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "create", summary = "Create a question", tags = "Questions",
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionBody.class))
             })},
-            requestBody = @RequestBody(required = true, description = "Insert a QuestionDTO",
+            requestBody = @RequestBody(required = true, description = "Insert a Question",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = QuestionDTO.class))
+                            schema = @Schema(implementation = QuestionBody.class))
                     })
     ))
     public RouterFunction<ServerResponse> createQuestion(CreateUseCase createUseCase) {
@@ -120,9 +122,9 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer", tags = "Answers",
-            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
+            requestBody = @RequestBody(required = true, description = "Insert an Answer",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = AnswerDTO.class))
+                            schema = @Schema(implementation = AnswerBody.class))
                     }),
             responses = {@ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
@@ -142,9 +144,9 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "updateQuestion", summary = "Update a question", tags = "Questions",
 
-            requestBody = @RequestBody(required = true, description = "Insert a QuestionDto",
+            requestBody = @RequestBody(required = true, description = "Insert a Question",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = QuestionDTO.class))
+                            schema = @Schema(implementation = QuestionBody.class))
                     }),
             responses = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = QuestionDTO.class))
@@ -165,9 +167,9 @@ public class QuestionRouter {
     @Bean
     @RouterOperation(operation = @Operation(operationId = "updateAnswer", summary = "Update an answer", tags = "Answers",
 
-            requestBody = @RequestBody(required = true, description = "Insert an AnswerDTO",
+            requestBody = @RequestBody(required = true, description = "Insert an Answer",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = AnswerDTO.class))
+                            schema = @Schema(implementation = AnswerBody.class))
                     }),
             responses = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = AnswerDTO.class))
