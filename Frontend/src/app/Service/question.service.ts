@@ -12,9 +12,7 @@ export class QuestionService {
     throw new Error('Method not implemented.');
   }
 
-
-  private url: string = 'http://localhost:8080/';
-
+  private url: string = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -24,11 +22,6 @@ export class QuestionService {
   }
 
   getAnswer(id: any): Observable<QuestionI> {
-    let direction = this.url + 'get/' + id;
-    return this.http.get<QuestionI>(direction);
-  }
-
-  getQuestion(id: string): Observable<QuestionI> {
     let direction = this.url + 'get/' + id;
     return this.http.get<QuestionI>(direction);
   }
@@ -43,20 +36,79 @@ export class QuestionService {
     return this.http.get<number>(direction);
   }
 
-  saveQuestion(question: QuestionI): Observable<any> {
-    let direction = this.url + 'create';
-    return this.http.post<any>(direction, question, {
-      responseType: 'text' as 'json',
+  public getAllQuestion(): Observable<QuestionI[]> {
+    return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
+  }
+
+  public saveQuestion(newQuestion: QuestionI): Observable<String> {
+    return this.http.post(`${this.url}/createQuestion`, newQuestion, {
+      responseType: 'text',
     });
   }
 
-  saveAnswer(answer: AnswerI): Observable<any> {
-    let direction = this.url + 'add';
-    return this.http.post<any>(direction, answer);
+  public getQuestion(questionId: string): Observable<QuestionI> {
+    return this.http.get<QuestionI>(`${this.url}/getQuestion/${questionId}`);
   }
 
-  editQuestion(question: QuestionI): Observable<any> {
-    let direction = this.url + 'update';
-    return this.http.post<any>(direction, question);
+  public saveAnswer(newAnswer: AnswerI, userEmail: any): Observable<any> {
+    newAnswer.email = userEmail
+    console.log(newAnswer);
+    return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {
+      observe: 'body',
+    });
   }
+
+  public editQuestion(newQuestion: QuestionI): Observable<QuestionI> {
+    return this.http.put<QuestionI>(`${this.url}/updateQuestion`, newQuestion);
+  }
+
+  public updateAnswer(newAnswer: AnswerI): Observable<AnswerI> {
+    return this.http.put<AnswerI>(`${this.url}/updateAnswer`, newAnswer);
+  }
+
+  public deleteQuestionById(questionId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteQuestion/${questionId}`);
+  }
+
+  public deleteAnswerById(answerId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteAnswer/${answerId}`);
+  }
+
+  //////////////////////
+
+  /* public getAllQuestion(): Observable<QuestionI[]> {
+    return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
+  }
+
+  public getAllQuestionsByUserId(userId:string): Observable<QuestionI> {
+    return this.http.get<QuestionI>(`${this.url}/getAllQuestions/${userId}`);
+  }
+
+  public createQuestion(newQuestion:QuestionI): Observable<QuestionI> {
+    return this.http.post<QuestionI>(`${this.url}/createQuestion`, newQuestion);
+  }
+
+  public getQuestion(questionId:string): Observable<QuestionI> {
+    return this.http.get<QuestionI>(`${this.url}/getQuestion/${questionId}`);
+  }
+
+  public addAnswer(newAnswer:AnswerI): Observable<AnswerI> {
+    return this.http.post<AnswerI>(`${this.url}/addAnswer`, newAnswer);
+  }
+
+  public updateQuestion(newQuestion:QuestionI): Observable<QuestionI> {
+    return this.http.put<QuestionI>(`${this.url}/updateQuestion`, newQuestion);
+  }
+
+  public updateAnswer(newAnswer:AnswerI): Observable<AnswerI> {
+    return this.http.put<AnswerI>(`${this.url}/updateAnswer`, newAnswer);
+  }
+
+  public deleteQuestionById(questionId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteQuestion/${questionId}`);
+  }
+
+  public deleteAnswerById(answerId: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/deleteAnswer/${answerId}`);
+  }*/
 }

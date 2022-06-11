@@ -1,26 +1,34 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Modulos
+
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule} from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+// Componrtrd
+
 import { AppComponent } from './app.component';
 import { PrimeNGModule } from './prime-ng/prime-ng.module';
 import { LoginComponent } from './persona/login/login.component';
 import { PreguntasComponent } from './persona/preguntas/preguntas.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegistroComponent } from './persona/registro/registro.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
 import { AnswerComponent } from './paginas/answer/answer.component';
 import { QuestionComponent } from './paginas/question/question.component';
-import { ToastModule } from 'primeng/toast';
-import { ToastrModule } from 'ngx-toastr';
 import { RequestionComponent } from './paginas/requestion/requestion.component';
 import { EditComponent } from './paginas/edit/edit.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { RecuperarPasswordComponent } from './persona/recuperar-password/recuperar-password.component';
+
 
 
 
@@ -34,7 +42,9 @@ import { EditComponent } from './paginas/edit/edit.component';
     AnswerComponent,
     QuestionComponent,
     RequestionComponent,
-    EditComponent
+    EditComponent,
+    RecuperarPasswordComponent,
+    SpinnerComponent
        
   ],
   imports: [
@@ -47,7 +57,8 @@ import { EditComponent } from './paginas/edit/edit.component';
     HttpClientModule,
     NgbModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AngularFireAuthModule
     
    
     
