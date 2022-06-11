@@ -6,7 +6,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseCodeErrorService } from 'src/app/Service/firebase-code-error.service';
-
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 @Component({
   selector: 'app-login',
@@ -46,8 +46,7 @@ export class LoginComponent implements OnInit {
     private afAuth:AngularFireAuth, 
     private toastrService:ToastrService, 
     private router:Router,
-    private firebaseErrorService:FirebaseCodeErrorService
-
+    private firebaseErrorService:FirebaseCodeErrorService,
   ) {
 
     this.loginUsuario = this.fb.group({
@@ -100,7 +99,15 @@ export class LoginComponent implements OnInit {
     });    
   }
 
-  /*ingresarGoogle() {
+  loginGoogle() {
+ 
+    this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(() => {
+      this.router.navigate(["preguntas"]);
+    })
+    
+  }
+
+   /*ingresarGoogle() {
     this.mostrar = !this.mostrar;       
     this.authService
       .loginGoogle(this.form.value.email, this.form.value.password)

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnswerI } from 'src/app/models/answer-i';
 import { QuestionI } from 'src/app/models/question-i';
 import { QuestionService } from 'src/app/Service/question.service';
+import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
   selector: 'app-requestion',
@@ -16,6 +17,8 @@ export class RequestionComponent implements OnInit {
   answersNew: AnswerI[]=[];
   currentAnswer:number=0;
 
+  mean:number = 0;
+
   questions: QuestionI[] | undefined;
  
   page: number = 0;
@@ -24,6 +27,7 @@ export class RequestionComponent implements OnInit {
     private route:ActivatedRoute,
     private questionService:QuestionService,
     private service: QuestionService,
+    public authService: ServiceService
 
     ) {
 
@@ -35,7 +39,8 @@ export class RequestionComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.getQuestions(`${id}`);
     this.get2();
-    
+    this.meanAnswer(`${id}`)
+       
   }
   
   get2(){
@@ -51,6 +56,7 @@ export class RequestionComponent implements OnInit {
     this.questionService.getQuestion(id).subscribe(data=>{
       this.question=data;
       this.answers = data.answers;
+      this.answers.sort((a, b) => (a.position > b.position ? -1 : 1));
     })
 
   }
@@ -60,6 +66,26 @@ export class RequestionComponent implements OnInit {
     for(let i = this.currentAnswer;i<last;i++){
     }
     this.currentAnswer+=10;
+  }
+
+  meanAnswer(id:string) {
+    this.questionService.getQuestion(id).subscribe((question) => {
+      let answers = question.answers;
+      let sum = 0;
+      for(let index=0; index<answers.length; index++) {
+        let answer = answers[index];
+        sum = sum + answer['position'];
+      }
+      let mean= (sum/answers.length).toFixed(0);
+      this.mean = parseInt(mean);
+      if (Number.isNaN(this.mean)) {
+        this.mean = 0;
+      } else {
+
+      }
+      
+      
+    })
   }
 
   onScroll() {

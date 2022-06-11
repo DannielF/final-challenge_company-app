@@ -31,22 +31,38 @@
         </div>
       </div>
       <div class="col-5">
+                <!---->
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <h5 class="text-center">Calificación </h5>
+                      <p-rating [cancel]="false" [(ngModel)]="mean" [disabled]="true"></p-rating>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <p style="margin-left: 3px">Calificación Promedio: {{mean}}</p>           
+                    <div class="accordion-body">
+                      <strong></strong> 
+                    </div>
+                  </div>
+                </div>
+                <!---->
         <div class="accordion" id="accordionExample"  *ngFor="let questions of answers">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 <h5 class="text-center">Respuesta: </h5>
-                <p-rating [cancel]="false" [(ngModel)]="questions.position" [disabled]="true"></p-rating>
-     
-                
-                <!-- Respuesta -->
+                <p-rating  [cancel]="false" [(ngModel)]="questions.position" [disabled]="true"></p-rating>               
               </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <p>{{ questions.answer }}</p>           
+              <p style="margin-left: 3px">{{ questions.answer}}</p>  
+              <p style="margin-left: 3px" *ngIf="questions.updated;else dataCreated"> fecha actualización: {{ questions.updated | date }}</p> 
+              <ng-template #dataCreated><p style="margin-left: 3px"> fecha creación: {{questions.created | date }}</p></ng-template>         
+              <button *ngIf="authService.userData" style="margin-left: 3px; margin-right: 3px;" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"> editar</i></button>
+              <button *ngIf="authService.userData"class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i> eliminar</button>
               <div class="accordion-body">
                 <strong></strong> 
-              
               </div>
             </div>
           </div>

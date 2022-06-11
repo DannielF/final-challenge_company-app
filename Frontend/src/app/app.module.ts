@@ -6,11 +6,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule} from '@angular/fire/compat';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule} from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 // Componrtrd
 
@@ -27,6 +28,7 @@ import { RequestionComponent } from './paginas/requestion/requestion.component';
 import { EditComponent } from './paginas/edit/edit.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { RecuperarPasswordComponent } from './persona/recuperar-password/recuperar-password.component';
+
 
 
 
@@ -55,7 +57,8 @@ import { RecuperarPasswordComponent } from './persona/recuperar-password/recuper
     HttpClientModule,
     NgbModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AngularFireAuthModule
     
    
     
