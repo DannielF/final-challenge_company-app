@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   disabled: boolean = false;*/
   
   dataUser:any;
+  
 
   constructor(
     private authService: ServiceService, 
@@ -24,7 +25,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
       if(user && user.emailVerified) {
-
+        console.log()
         this.dataUser = user;
 
       } else {

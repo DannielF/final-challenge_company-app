@@ -59,8 +59,33 @@
               <p style="margin-left: 3px">{{ questions.answer}}</p>  
               <p style="margin-left: 3px" *ngIf="questions.updated;else dataCreated"> fecha actualización: {{ questions.updated | date }}</p> 
               <ng-template #dataCreated><p style="margin-left: 3px"> fecha creación: {{questions.created | date }}</p></ng-template>         
-              <button *ngIf="authService.userData == id" style="margin-left: 3px; margin-right: 3px;" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"> editar</i></button>
-              <button *ngIf="authService.userData == id"class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i> eliminar</button>
+              <ng-template #content let-modal>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="card text-center">
+                                <div class="card-header fs-4 font1">
+                                    <b>Modifica tu respuesta</b>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="form-floating">
+                                        <textarea  [(ngModel)]="questions.answer" class="form-control m-2" placeholder="Leave a comment here" id="question" style="height: 150px"
+                                        ></textarea>
+                                        <label for="floatingTextarea">Respuesta</label>
+                                    </div>                         
+                                    <p-rating [cancel]="false" [(ngModel)]="questions.position"></p-rating>
+                                    <br>
+                                    <button pButton (click)="updateAnswer(questions)" pRipple type="button" label="Enviar respuesta" class="p-button-outlined p-button-info"></button>
+                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">            
+                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-secondary" (click)="modal.close('Close click')"></button>
+                </div>
+              </ng-template>
+              <button *ngIf="questions.userId == userIdQuestion" (click)="openVerticallyCentered(content)" style="margin-left: 3px; margin-right: 3px;" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"> editar</i></button>
+              <button *ngIf="questions.userId == userIdQuestion" (click)="eliminar(questions.id)" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i> eliminar</button>
               <div class="accordion-body">
                 <strong></strong> 
               </div>

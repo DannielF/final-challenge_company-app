@@ -55,6 +55,7 @@ export class EditComponent implements OnInit {
 
   getData(){    
     this.userLogged.subscribe(value=>{
+      console.log(value)
     })
     
   }
