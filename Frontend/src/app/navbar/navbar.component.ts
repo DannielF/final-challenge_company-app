@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
       if(user && user.emailVerified) {
-        console.log()
+        console.log(user)
         this.dataUser = user;
 
       } else {

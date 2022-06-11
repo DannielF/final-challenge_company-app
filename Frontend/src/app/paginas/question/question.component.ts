@@ -50,12 +50,10 @@ export class QuestionComponent implements OnInit {
   }
 
   saveQuestion(question: QuestionI): void {
-    console.log(question);
     if(question.type && question.category){    
      this.modalService.dismissAll();
      this.services.saveQuestion(question).subscribe({
-       next: (v) => { 
-        console.log(v)      
+       next: (v) => {    
          if (v) {
            this.messageService.add({
              severity: 'success',

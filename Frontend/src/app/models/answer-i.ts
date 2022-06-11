@@ -6,4 +6,5 @@ export interface AnswerI {
    position:number;
    created?:string;
    updated?:string;
+   email?:string;
 }

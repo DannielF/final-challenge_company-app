@@ -59,7 +59,6 @@ export class AnswerComponent implements OnInit {
     console.log(this.answer);
     this.services.saveAnswer(this.answer, this.userEmail).subscribe({
       next: (v) => {
-        console.log(v);
         if (v) {
           this.modalService.dismissAll();
           this.messageService.add({
@@ -67,7 +66,7 @@ export class AnswerComponent implements OnInit {
             summary: 'Se ha agregado la respuesta',
           });
           setTimeout(() => {
-            window.location.reload();
+            //window.location.reload();
           }, 1000);
         }
       },

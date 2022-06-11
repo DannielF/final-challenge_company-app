@@ -51,6 +51,8 @@ export class QuestionService {
   }
 
   public saveAnswer(newAnswer: AnswerI, userEmail: any): Observable<any> {
+    newAnswer.email = userEmail
+    console.log(newAnswer);
     return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {
       observe: 'body',
       params: userEmail,
