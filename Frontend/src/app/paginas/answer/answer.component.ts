@@ -72,7 +72,7 @@ export class AnswerComponent implements OnInit {
             summary: 'Se ha agregado la respuesta',
           });
           setTimeout(() => {
-            //window.location.reload();
+            window.location.reload();
           }, 1000);
         }
       },
