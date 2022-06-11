@@ -8,14 +8,13 @@ import { AnswerI } from '../models/answer-i';
   providedIn: 'root',
 })
 export class QuestionService {
-  
   push(arg0: string) {
     throw new Error('Method not implemented.');
   }
 
   private url: string = 'http://localhost:8080';
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
@@ -41,23 +40,28 @@ export class QuestionService {
     return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
   }
 
-  public saveQuestion(newQuestion:QuestionI): Observable<String> {
-    return this.http.post(`${this.url}/createQuestion`, newQuestion, {responseType: 'text'});
+  public saveQuestion(newQuestion: QuestionI): Observable<String> {
+    return this.http.post(`${this.url}/createQuestion`, newQuestion, {
+      responseType: 'text',
+    });
   }
 
-  public getQuestion(questionId:string): Observable<QuestionI> {
+  public getQuestion(questionId: string): Observable<QuestionI> {
     return this.http.get<QuestionI>(`${this.url}/getQuestion/${questionId}`);
   }
 
-  public saveAnswer(newAnswer:AnswerI): Observable<any> {
-    return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {observe: "body"});
+  public saveAnswer(newAnswer: AnswerI, userEmail: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {
+      observe: 'body',
+      params: userEmail,
+    });
   }
 
-  public editQuestion(newQuestion:QuestionI): Observable<QuestionI> {
+  public editQuestion(newQuestion: QuestionI): Observable<QuestionI> {
     return this.http.put<QuestionI>(`${this.url}/updateQuestion`, newQuestion);
   }
 
-  public updateAnswer(newAnswer:AnswerI): Observable<AnswerI> {
+  public updateAnswer(newAnswer: AnswerI): Observable<AnswerI> {
     return this.http.put<AnswerI>(`${this.url}/updateAnswer`, newAnswer);
   }
 
@@ -71,7 +75,7 @@ export class QuestionService {
 
   //////////////////////
 
- /* public getAllQuestion(): Observable<QuestionI[]> {
+  /* public getAllQuestion(): Observable<QuestionI[]> {
     return this.http.get<QuestionI[]>(`${this.url}/getAllQuestions`);
   }
 
