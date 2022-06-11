@@ -30,6 +30,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
@@ -43,6 +44,7 @@ public class QuestionRouter {
 
     @Autowired
     private EmailServiceImpl emailService;
+    Logger log = Logger.getLogger("Router");
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions", tags = "Questions",
@@ -136,14 +138,21 @@ public class QuestionRouter {
             })}
     ))
     public RouterFunction<ServerResponse> addAnswer(AddAnswerUseCase addAnswerUseCase) {
-        emailService.sendHTMLMessage("danielgranados1992@gmail.com");
         return route(POST("/addAnswer").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(AnswerDTO.class)
-                        .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
-                                .flatMap(result -> ServerResponse.ok()
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .bodyValue(result))
-                        )
+                request -> {
+                    log.info("QueryParam " + request.queryParam("userEmail").orElse(""));
+                    //log.info("pathVariable "+ request.pathVariable("userEmail"));
+                    log.info("Headers "+ request.headers());
+                    log.info("QueryParams "+ request.queryParams());
+                    log.info("PathVariables "+ request.pathVariables());
+                    emailService.sendHTMLMessage("danielgranados1992@gmail.com");
+                    return request.bodyToMono(AnswerDTO.class)
+                            .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
+                                    .flatMap(result -> ServerResponse.ok()
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .bodyValue(result))
+                            );
+                }
         );
     }
 
