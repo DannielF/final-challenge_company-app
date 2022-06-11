@@ -44,9 +44,9 @@ class AddAnswerUseCaseTest {
         question.setType("tech");
         question.setCategory("software");
         question.setQuestion("¿Que es java?");
-        question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", Instant.now(), Instant.now())));
+        question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now())));
 
-        AnswerDTO answerDTO = new AnswerDTO("1234", "1", "1", "answer", Instant.now(), Instant.now());
+        AnswerDTO answerDTO = new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now());
 
         when(addAnswerUseCase.apply(answerDTO)).thenReturn(Mono.just(question));
 
@@ -58,7 +58,7 @@ class AddAnswerUseCaseTest {
                     question.setType("tech");
                     question.setCategory("software");
                     question.setQuestion("¿Que es java?");
-                    question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", Instant.now(), Instant.now())));
+                    question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now())));
                     return true;
                 })
                 .verifyComplete();

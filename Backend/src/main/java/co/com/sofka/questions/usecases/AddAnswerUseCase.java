@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -24,6 +26,7 @@ public class AddAnswerUseCase implements SaveAnswer {
 
     public Mono<QuestionDTO> apply(AnswerDTO answerDTO) {
         Objects.requireNonNull(answerDTO.getQuestionId(), "Id of the answer is required");
+        answerDTO.setCreated(Instant.now());
         return getUseCase.apply(answerDTO.getQuestionId()).flatMap(question ->
                 answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
                         .map(answer -> {

@@ -4,6 +4,7 @@ package co.com.sofka.questions.model;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class AnswerDTO {
     private String answer;
     @Max(5)
     @Min(1)
-    @NotBlank
+    @NotNull
     private Integer position;
     private Instant created;
     private Instant updated;
@@ -33,18 +34,24 @@ public class AnswerDTO {
                      @NotBlank String questionId,
                      @NotBlank String userId,
                      @NotBlank String answer,
+                     @NotNull Integer position,
                      Instant created,
                      Instant updated) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
+        this.position = position;
         this.created = created;
         this.updated = updated;
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Instant getCreated() {
