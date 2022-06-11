@@ -62,7 +62,9 @@ export class AnswerComponent implements OnInit {
   saveAnswer(): void {
     this.answer.userId = this.item.userId;
     this.answer.questionId = this.item.id;
-    console.log(this.answer);
+    this.afAuth.currentUser.then((user) => {
+        this.userEmail = user?.email;
+      });
     this.services.saveAnswer(this.answer, this.userEmail).subscribe({
       next: (v) => {
         if (v) {
