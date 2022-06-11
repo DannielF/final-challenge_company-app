@@ -46,16 +46,6 @@ public class AnswerDTO {
         this.updated = updated;
     }
 
-    public AnswerDTO(String userId, String questionId, String answer, Integer position, Instant created, Instant updated, String email) {
-        this.userId = userId;
-        this.questionId = questionId;
-        this.answer = answer;
-        this.position = position;
-        this.created = created;
-        this.updated = updated;
-        this.email = email;
-    }
-
     public String getEmail() {
         return email;
     }
