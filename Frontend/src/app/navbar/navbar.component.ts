@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
         this.dataUser = user;
 
       } else {
-        //this.router.navigate(["/preguntas"]);
+        //window.location.reload;
       }
     })
   }
