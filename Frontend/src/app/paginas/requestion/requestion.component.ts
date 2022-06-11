@@ -8,7 +8,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-requestion',
   templateUrl: './requestion.component.html',
-  styleUrls: ['./requestion.component.css']
+  styleUrls: ['./requestion.component.scss']
 })
 export class RequestionComponent implements OnInit {
   

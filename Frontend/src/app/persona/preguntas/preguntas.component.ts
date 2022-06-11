@@ -6,7 +6,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
-  styleUrls: ['./preguntas.component.css'],
+  styleUrls: ['./preguntas.component.scss'],
 })
 export class PreguntasComponent implements OnInit {
   userLogged = this.authService.getUserLogged();
