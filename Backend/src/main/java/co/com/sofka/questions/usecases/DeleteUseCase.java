@@ -20,6 +20,12 @@ public class DeleteUseCase implements Function<String, Mono<Void>> {
         this.answerRepository = answerRepository;
     }
 
+    public Mono<Void> deleteAnswerById(String id) {
+        Objects.requireNonNull(id, "Id is required");
+        return answerRepository.deleteById(id)
+                .doOnError(throwable -> Mono.error(throwable.getCause()));
+
+    }
 
     @Override
     public Mono<Void> apply(String id) {

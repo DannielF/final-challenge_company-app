@@ -6,7 +6,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
-  styleUrls: ['./preguntas.component.css'],
+  styleUrls: ['./preguntas.component.scss'],
 })
 export class PreguntasComponent implements OnInit {
   userLogged = this.authService.getUserLogged();
@@ -26,16 +26,19 @@ export class PreguntasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  
     this.getQuestions();
-    this.traerdatos();
+    this.cargarProducto();
+    //this.traerdatos();
   }
 
   getQuestions(): void {
     this.userLogged.subscribe(value =>{
         this.uid=value?.uid
     });
-    this.service.getPage(this.page).subscribe((data) => {
+    this.service.getAllQuestion().subscribe((data) => {
         this.questions = data;
+        this.totalQuestions = data.length;
     });
     this.service
       .getTotalPages()
@@ -68,12 +71,18 @@ export class PreguntasComponent implements OnInit {
   }
 
   traerdatos() {
-    this.userLogged.subscribe((value) => {     
+    this.userLogged.subscribe((value) => {   
       if (value?.email == undefined) {
         this.disabled = true;       
       } else {
         this.disabled = false;     
       }
+    });
+  }
+  cargarProducto(): void {
+
+    this.service.getAllQuestion().subscribe(datos => {
+      this.questions = Object.values(datos);
     });
   }
 }

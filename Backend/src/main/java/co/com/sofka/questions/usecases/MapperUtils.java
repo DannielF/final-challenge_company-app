@@ -6,7 +6,6 @@ import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.function.Function;
 
 @Component
@@ -19,7 +18,7 @@ public class MapperUtils {
             answer.setQuestionId(updateAnswer.getQuestionId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
-            answer.setCreated(Instant.now());
+            answer.setDate(updateAnswer.getDate());
             return answer;
         };
     }
@@ -32,26 +31,30 @@ public class MapperUtils {
             question.setQuestion(updateQuestion.getQuestion());
             question.setType(updateQuestion.getType());
             question.setCategory(updateQuestion.getCategory());
+            question.setEmail(updateQuestion.getEmail());
             return question;
         };
     }
 
     public Function<Question, QuestionDTO> mapEntityToQuestion() {
-        return entity -> new QuestionDTO(
-                entity.getId(),
-                entity.getUserId(),
-                entity.getQuestion(),
-                entity.getType(),
-                entity.getCategory()
-        );
+        return entity ->
+                new QuestionDTO(
+                        entity.getId(),
+                        entity.getUserId(),
+                        entity.getQuestion(),
+                        entity.getType(),
+                        entity.getCategory(),
+                        entity.getEmail());
     }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
         return entity -> new AnswerDTO(
                 entity.getId(),
+                entity.getQuestionId(),
                 entity.getUserId(),
                 entity.getAnswer(),
-                entity.getCreated()
+                entity.getPosition(),
+                entity.getDate()
         );
     }
 }

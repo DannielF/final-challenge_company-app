@@ -7,21 +7,22 @@ import { QuestionService } from 'src/app/Service/question.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ServiceService } from 'src/app/Service/service.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
-  styleUrls: ['./answer.component.css'],
+  styleUrls: ['./answer.component.scss'],
   providers: [MessageService],
 })
 export class AnswerComponent implements OnInit {
-
-  
   public form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(10)]],
     rating: ['', []],
   });
+
+  userEmail: string | null | undefined;
 
   @Input() item: any;
   constructor(
@@ -31,7 +32,8 @@ export class AnswerComponent implements OnInit {
     private route: Router,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    public authService: ServiceService
+    public authService: ServiceService,
+    private afAuth: AngularFireAuth
   ) {}
 
   answer: AnswerI = {
@@ -39,9 +41,18 @@ export class AnswerComponent implements OnInit {
     questionId: '',
     answer: '',
     position: 0,
+    date: '',
   };
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.afAuth.currentUser.then((user) => {
+      if (user?.email == undefined) {
+        this.route.navigate(['preguntas']);
+      } else {
+        this.userEmail = user.email;
+      }
+    });
+  }
 
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
@@ -50,26 +61,28 @@ export class AnswerComponent implements OnInit {
   saveAnswer(): void {
     this.answer.userId = this.item.userId;
     this.answer.questionId = this.item.id;
-    this.services.saveAnswer(this.answer).subscribe({
+
+    this.services.saveAnswer(this.answer, this.item.email).subscribe({
       next: (v) => {
-        if(v){
+        if (v) {
           this.modalService.dismissAll();
           this.messageService.add({
             severity: 'success',
             summary: 'Se ha agregado la respuesta',
-            
-           });
-           setTimeout(() => {
-           window.location.reload();
-         }, 1000);
-        }        
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
       },
-      error: (e) =>
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Rectifique los datos',
-        detail: '(Campos Vacios)-Intente de Nuevo',
-      }),
+      error: (e) => {
+        console.log(e);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rectifique los datos',
+          detail: '(Campos Vacios)-Intente de Nuevo',
+        });
+      },
       complete: () => console.info('complete'),
     });
   }

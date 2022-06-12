@@ -1,51 +1,61 @@
 package co.com.sofka.questions.model;
 
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
 public class AnswerDTO {
+
+    private String id;
     @NotBlank(message = "There must be an id for this answer")
     private String userId;
     @NotBlank
     private String questionId;
     @NotBlank
     private String answer;
+    @Max(5)
+    @Min(1)
+    @NotNull
     private Integer position;
-    private Instant created;
-    private Instant updated;
-
+    private Instant date;
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId,
+    public AnswerDTO(String id,
+                     @NotBlank String questionId,
                      @NotBlank String userId,
                      @NotBlank String answer,
-                    Instant created) {
+                     @NotNull Integer position,
+                     Instant date) {
+        this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
-        this.created = created;
+        this.position = position;
+        this.date = date;
     }
 
-    public Instant getCreated() {
-        return created;
+    public String getId() {
+        return id;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Instant getUpdated() {
-        return updated;
+    public Instant getDate() {
+        return date;
     }
 
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
+    public void setDate(Instant date) {
+        this.date = date;
     }
 
     public Integer getPosition() {
@@ -97,12 +107,12 @@ public class AnswerDTO {
     @Override
     public String toString() {
         return "AnswerDTO {" +
-                "userId='" + userId + '\'' +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 ", position=" + position +
-                ", created=" + created +
-                ", updated=" + updated +
+                ", date=" + date +
                 '}';
     }
 }
