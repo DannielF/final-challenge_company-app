@@ -1,68 +1,70 @@
 package co.com.sofka.questions.usecases;
 
+import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.reposioties.AnswerRepository;
 import co.com.sofka.questions.reposioties.QuestionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
 import java.time.Instant;
-import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-
+@SpringBootTest
 class AddAnswerUseCaseTest {
 
+    @MockBean
     QuestionRepository questionRepository;
+    @MockBean
     AnswerRepository answerRepository;
+    @SpyBean
     AddAnswerUseCase addAnswerUseCase;
+    @MockBean
     GetUseCase getUseCase;
 
-    @BeforeEach
-    public void setup() {
-        MapperUtils mapperUtils = new MapperUtils();
-        answerRepository = mock(AnswerRepository.class);
-        questionRepository = mock(QuestionRepository.class);
-        getUseCase = new GetUseCase(mapperUtils, questionRepository, answerRepository);
-        addAnswerUseCase = new AddAnswerUseCase(mapperUtils, getUseCase, answerRepository);
-    }
 
     @Test
     @DisplayName("Test for add an answer to a question")
     public void addAnswerUseCase() {
 
-        var question = new QuestionDTO();
-        question.setId("1");
-        question.setUserId("1");
-        question.setType("tech");
-        question.setCategory("software");
-        question.setQuestion("¿Que es java?");
-        question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now())));
+        var questionDTO = new QuestionDTO();
+        questionDTO.setId("1");
+        questionDTO.setUserId("1");
+        questionDTO.setType("tech");
+        questionDTO.setCategory("software");
+        questionDTO.setQuestion("¿Que es java?");
 
-        AnswerDTO answerDTO = new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now());
+        AnswerDTO answerDTO = new AnswerDTO("1234",
+                "1", "1",
+                "answer", 1,
+                Instant.now(), Instant.now()
+        );
+        answerDTO.setEmail("");
 
-        when(addAnswerUseCase.apply(answerDTO)).thenReturn(Mono.just(question));
+        Answer answer = new Answer();
+        answer.setId("1234");
+        answer.setQuestionId("1");
+        answer.setAnswer("answer");
+        answer.setPosition(1);
+        answer.setCreated(Instant.now());
+        answer.setUpdated(Instant.now());
 
+        when(getUseCase.apply(Mockito.anyString())).thenReturn(Mono.just(questionDTO));
+        when(answerRepository.save(Mockito.any(Answer.class))).thenReturn(Mono.just(answer));
 
-        StepVerifier.create(addAnswerUseCase.apply(answerDTO))
-                .expectNextMatches(questionDTO -> {
-                    question.setId("1");
-                    question.setUserId("1");
-                    question.setType("tech");
-                    question.setCategory("software");
-                    question.setQuestion("¿Que es java?");
-                    question.setAnswers(List.of(new AnswerDTO("1234", "1", "1", "answer", 1, Instant.now(), Instant.now())));
-                    return true;
-                })
-                .verifyComplete();
+        var questionFromResponse = addAnswerUseCase.apply(answerDTO).block();
 
-        verify(answerRepository).findAll();
+        assertEquals(questionFromResponse != null ? questionFromResponse.getId() : null, questionDTO.getId());
+        assert questionFromResponse != null;
+        assertEquals(questionFromResponse.getQuestion(), questionDTO.getQuestion());
+        assertEquals(questionFromResponse.getUserId(), questionDTO.getUserId());
     }
 }
