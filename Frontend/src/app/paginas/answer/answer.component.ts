@@ -41,12 +41,13 @@ export class AnswerComponent implements OnInit {
     questionId: '',
     answer: '',
     position: 0,
+    date: '',
   };
 
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
-      if(user?.email == undefined) {
-        this.route.navigate(['preguntas'])
+      if (user?.email == undefined) {
+        this.route.navigate(['preguntas']);
       } else {
         this.userEmail = user.email;
       }
@@ -60,10 +61,8 @@ export class AnswerComponent implements OnInit {
   saveAnswer(): void {
     this.answer.userId = this.item.userId;
     this.answer.questionId = this.item.id;
-    this.afAuth.currentUser.then((user) => {
-        this.userEmail = user?.email;
-      });
-    this.services.saveAnswer(this.answer, this.userEmail).subscribe({
+
+    this.services.saveAnswer(this.answer, this.item.email).subscribe({
       next: (v) => {
         if (v) {
           this.modalService.dismissAll();
