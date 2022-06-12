@@ -2,6 +2,7 @@ package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.body_interfaces_swagger.AnswerBody;
 import co.com.sofka.questions.body_interfaces_swagger.QuestionBody;
+import co.com.sofka.questions.config.EmailServiceImpl;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.usecases.AddAnswerUseCase;
@@ -18,7 +19,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springdoc.core.annotations.RouterOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -38,6 +42,10 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 
 @Configuration
 public class QuestionRouter {
+
+    Logger log = LoggerFactory.getLogger("QuestionRouter");
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Get all questions", tags = "Questions",
@@ -110,7 +118,7 @@ public class QuestionRouter {
     ))
     public RouterFunction<ServerResponse> getQuestion(GetUseCase getUseCase) {
         return route(
-                GET("/getQuestion/{id}" ).and(accept(MediaType.APPLICATION_JSON)),
+                GET("/getQuestion/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(getUseCase.apply(
@@ -122,6 +130,10 @@ public class QuestionRouter {
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add an answer", tags = "Answers",
+            parameters = {
+                    @Parameter(in = ParameterIn.QUERY, name = "email",
+                            description = "userEmail",
+                            required = true)},
             requestBody = @RequestBody(required = true, description = "Insert an Answer",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AnswerBody.class))
@@ -132,14 +144,17 @@ public class QuestionRouter {
     ))
     public RouterFunction<ServerResponse> addAnswer(AddAnswerUseCase addAnswerUseCase) {
         return route(POST("/addAnswer").and(accept(MediaType.APPLICATION_JSON)),
-                request ->
-                        request.bodyToMono(AnswerDTO.class)
-                                .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
-                                        .flatMap(result -> ServerResponse.ok()
-                                                .contentType(MediaType.APPLICATION_JSON)
-                                                .bodyValue(result))
-                                )
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(addAnswerDTO -> {
 
+                            emailService.sendHTMLMessage(request.queryParam("email").orElse("angularJava@gmail.com"),
+                                    addAnswerDTO.getQuestionId());
+
+                            return addAnswerUseCase.apply(addAnswerDTO)
+                                    .flatMap(result -> ServerResponse.ok()
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .bodyValue(result));
+                        })
         );
     }
 

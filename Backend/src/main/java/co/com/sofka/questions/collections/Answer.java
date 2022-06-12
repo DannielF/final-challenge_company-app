@@ -13,23 +13,14 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
-    private Instant created;
-    private Instant updated;
+    private Instant date;
 
-    public Instant getCreated() {
-        return created;
+    public Instant getDate() {
+        return date;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
+    public void setDate(Instant date) {
+        this.date = date;
     }
 
     public Integer getPosition() {
