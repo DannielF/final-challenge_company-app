@@ -41,6 +41,7 @@ export class QuestionService {
   }
 
   public saveQuestion(newQuestion: QuestionI): Observable<String> {
+    console.log('Service ->', newQuestion);
     return this.http.post(`${this.url}/createQuestion`, newQuestion, {
       responseType: 'text',
     });
@@ -51,11 +52,14 @@ export class QuestionService {
   }
 
   public saveAnswer(newAnswer: AnswerI, userEmail: any): Observable<any> {
-    newAnswer.email = userEmail
     console.log(newAnswer);
-    return this.http.post<any>(`${this.url}/addAnswer`, newAnswer, {
-      observe: 'body',
-    });
+    return this.http.post<any>(
+      `${this.url}/addAnswer?email=${userEmail}`,
+      newAnswer,
+      {
+        observe: 'body',
+      }
+    );
   }
 
   public editQuestion(newQuestion: QuestionI): Observable<QuestionI> {
