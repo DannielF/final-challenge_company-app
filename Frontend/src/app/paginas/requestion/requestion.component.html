@@ -140,7 +140,7 @@
               </div>
             </ng-template>
             <button
-              *ngIf="questions.userId == userIdQuestion"
+              *ngIf="questions.userId == userId"
               (click)="openVerticallyCentered(content)"
               style="margin-left: 3px; margin-right: 3px"
               class="btn btn-outline-warning"
@@ -148,7 +148,7 @@
               <i class="fa-solid fa-pen-to-square"> editar</i>
             </button>
             <button
-              *ngIf="questions.userId == userIdQuestion"
+              *ngIf="questions.userId == userId"
               (click)="eliminar(questions.id)"
               class="btn btn-outline-danger"
             >

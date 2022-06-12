@@ -41,11 +41,9 @@ export class QuestionService {
   }
 
   public saveQuestion(newQuestion: QuestionI): Observable<String> {
-<<<<<<< HEAD
+
     console.log(newQuestion);
-=======
-    console.log('Service ->', newQuestion);
->>>>>>> dannielf
+
     return this.http.post(`${this.url}/createQuestion`, newQuestion, {
       responseType: 'text',
     });

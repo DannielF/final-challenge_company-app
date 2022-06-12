@@ -16,15 +16,26 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   providers: [MessageService],
 })
 export class AnswerComponent implements OnInit {
+  
   public form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(10)]],
     rating: ['', []],
   });
 
-  userEmail: string | null | undefined;
+  answer: AnswerI = {
+    userId: '',
+    questionId: '',
+    answer: '',
+    position: 0,
+    date: '',
+    email:''
+  };
 
+  userEmail: string | null | undefined;
+  
   @Input() item: any;
+  
   constructor(
     private modalService: NgbModal,
     private services: QuestionService,
@@ -36,20 +47,13 @@ export class AnswerComponent implements OnInit {
     private afAuth: AngularFireAuth
   ) {}
 
-  answer: AnswerI = {
-    userId: '',
-    questionId: '',
-    answer: '',
-    position: 0,
-    date: '',
-  };
-
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
       if (user?.email == undefined) {
         this.route.navigate(['preguntas']);
       } else {
         this.userEmail = user.email;
+        this.answer.email = user.email;
       }
     });
   }
@@ -59,9 +63,11 @@ export class AnswerComponent implements OnInit {
   }
 
   saveAnswer(): void {
-    this.answer.userId = this.item.userId;
+    
+    this.afAuth.currentUser.then((user) => {
+      this.answer.userId = user?.uid;
+    })
     this.answer.questionId = this.item.id;
-
     this.services.saveAnswer(this.answer, this.item.email).subscribe({
       next: (v) => {
         if (v) {
@@ -75,6 +81,7 @@ export class AnswerComponent implements OnInit {
           }, 1000);
         }
       },
+
       error: (e) => {
         console.log(e);
         this.messageService.add({
@@ -83,6 +90,7 @@ export class AnswerComponent implements OnInit {
           detail: '(Campos Vacios)-Intente de Nuevo',
         });
       },
+
       complete: () => console.info('complete'),
     });
   }

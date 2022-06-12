@@ -30,13 +30,8 @@ export class QuestionComponent implements OnInit {
     question: '',
     type: '',
     category: '',
-<<<<<<< HEAD
-    answers:[],
-    email: ''
-=======
     email: '',
     answers: [],
->>>>>>> dannielf
   };
 
   constructor(
@@ -52,7 +47,9 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
       this.question.email = user?.email;
+      console.log(user?.uid);
     });
+    
   }
 
   openVerticallyCentered(content: any) {
@@ -60,9 +57,8 @@ export class QuestionComponent implements OnInit {
   }
 
   saveQuestion(question: QuestionI): void {
-<<<<<<< HEAD
     if(question.type && question.category){    
-     this.modalService.dismissAll();
+     //this.modalService.dismissAll();
      this.afAuth.currentUser.then((user) => {
      this.question.email = user?.email;
      });
@@ -76,7 +72,7 @@ export class QuestionComponent implements OnInit {
              
             });
             setTimeout(() => {
-            //window.location.reload();
+            window.location.reload();
           }, 2000);
         } else {
           
@@ -96,36 +92,6 @@ export class QuestionComponent implements OnInit {
       detail: '(Campos Vacios)-Intente de Nuevo',
     });
   }
-=======
-    if (question.type && question.category) {
-      this.modalService.dismissAll();
-      console.log('Question L59 ->', question);
-      this.services.saveQuestion(question).subscribe({
-        next: (v) => {
-          if (v) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Se ha agregado la pregunta',
-            });
-            setTimeout(() => {
-              //window.location.reload();
-            }, 2000);
-          } else {
-          }
-        },
-        error: (e) =>
-          this.toastr.error(e.mesaje, 'Fail', {
-            timeOut: 3000,
-          }),
-        complete: () => console.info('complete'),
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Rectifique los datos',
-        detail: '(Campos Vacios)-Intente de Nuevo',
-      });
-    }
->>>>>>> dannielf
   }
+
 }
