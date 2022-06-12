@@ -3,27 +3,25 @@ package co.com.sofka.questions.usecases;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.reposioties.QuestionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class CreateUseCaseTest {
 
+    @MockBean
     QuestionRepository repository;
-    CreateUseCase useCase;
+    @SpyBean
+    CreateUseCase createUseCase;
 
-    @BeforeEach
-    public void setup() {
-        MapperUtils mapper = new MapperUtils();
-        repository = mock(QuestionRepository.class);
-        useCase = new CreateUseCase(mapper, repository);
-    }
 
     @Test
     @DisplayName("Save a question")
@@ -34,19 +32,18 @@ class CreateUseCaseTest {
         question.setType("tech");
         question.setCategory("software");
         question.setQuestion("¿Que es java?");
-        when(repository.save(question)).thenReturn(Mono.just(question));
 
-        StepVerifier.create(useCase.apply(new QuestionDTO(question.getId(),
-                        question.getUserId(),
-                        question.getQuestion(),
-                        question.getType(),
-                        question.getCategory()
-                ))
-        ).expectNextMatches(questionEx -> {
-            assert questionEx.equals(question.getId());
-            return true;
-        }).verifyComplete();
+        var questionDTO = new QuestionDTO();
+        questionDTO.setId("1");
+        questionDTO.setUserId("xxxx-xxxx");
+        questionDTO.setType("tech");
+        questionDTO.setCategory("software");
+        questionDTO.setQuestion("¿Que es java?");
 
-        verify(repository).save(question);
+        when(repository.save(Mockito.any(Question.class))).thenReturn(Mono.just(question));
+
+        var questionToSave = createUseCase.apply(questionDTO).block();
+
+        assertEquals(questionToSave, question.getId());
     }
 }
