@@ -22,9 +22,7 @@ public class AnswerDTO {
     @Min(1)
     @NotNull
     private Integer position;
-    private Instant created;
-    private Instant updated;
-    private String email;
+    private Instant date;
 
     public AnswerDTO() {
 
@@ -35,23 +33,13 @@ public class AnswerDTO {
                      @NotBlank String userId,
                      @NotBlank String answer,
                      @NotNull Integer position,
-                     Instant created,
-                     Instant updated) {
+                     Instant date) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
-        this.created = created;
-        this.updated = updated;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.date = date;
     }
 
     public String getId() {
@@ -62,20 +50,12 @@ public class AnswerDTO {
         this.id = id;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getDate() {
+        return date;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
+    public void setDate(Instant date) {
+        this.date = date;
     }
 
     public Integer getPosition() {
@@ -132,9 +112,7 @@ public class AnswerDTO {
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 ", position=" + position +
-                ", created=" + created +
-                ", updated=" + updated +
-                ", email='" + email + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

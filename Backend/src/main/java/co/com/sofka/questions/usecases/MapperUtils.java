@@ -18,8 +18,7 @@ public class MapperUtils {
             answer.setQuestionId(updateAnswer.getQuestionId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
-            answer.setCreated(updateAnswer.getCreated());
-            answer.setUpdated(updateAnswer.getUpdated());
+            answer.setDate(updateAnswer.getDate());
             return answer;
         };
     }
@@ -32,6 +31,7 @@ public class MapperUtils {
             question.setQuestion(updateQuestion.getQuestion());
             question.setType(updateQuestion.getType());
             question.setCategory(updateQuestion.getCategory());
+            question.setEmail(updateQuestion.getEmail());
             return question;
         };
     }
@@ -42,8 +42,8 @@ public class MapperUtils {
                 entity.getUserId(),
                 entity.getQuestion(),
                 entity.getType(),
-                entity.getCategory()
-        );
+                entity.getCategory(),
+                entity.getEmail());
     }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
@@ -53,8 +53,7 @@ public class MapperUtils {
                 entity.getUserId(),
                 entity.getAnswer(),
                 entity.getPosition(),
-                entity.getCreated(),
-                entity.getUpdated()
+                entity.getDate()
         );
     }
 }

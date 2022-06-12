@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 public class AnswerBody {
 
+    private String id;
     @NotBlank(message = "There must be an id for this answer")
     private String userId;
     @NotBlank
@@ -17,14 +18,21 @@ public class AnswerBody {
     @Min(1)
     @NotNull
     private Integer position;
-    private String email;
 
-    public AnswerBody(String userId, String questionId, String answer, Integer position, String email) {
+    public AnswerBody(String id, String userId, String questionId, String answer, Integer position) {
+        this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
-        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserId() {
@@ -59,18 +67,11 @@ public class AnswerBody {
         this.position = position;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return "Answer {" +
-                "userId='" + userId + '\'' +
+        return "AnswerBody {" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 ", position=" + position +

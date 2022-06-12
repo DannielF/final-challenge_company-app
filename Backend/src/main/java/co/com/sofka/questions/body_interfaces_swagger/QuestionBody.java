@@ -12,12 +12,15 @@ public class QuestionBody {
     private String type;
     @NotBlank
     private String category;
+    @NotBlank
+    private String email;
 
-    public QuestionBody(String userId, String question, String type, String category) {
+    public QuestionBody(String userId, String question, String type, String category, String email) {
         this.userId = userId;
         this.question = question;
         this.type = type;
         this.category = category;
+        this.email = email;
     }
 
     public String getUserId() {
@@ -52,13 +55,22 @@ public class QuestionBody {
         this.category = category;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "Question {" +
+        return "QuestionBody {" +
                 "userId='" + userId + '\'' +
                 ", question='" + question + '\'' +
                 ", type='" + type + '\'' +
                 ", category='" + category + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

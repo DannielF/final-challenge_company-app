@@ -27,8 +27,8 @@ public class UpdateUseCase implements SaveQuestion {
     }
 
     public Mono<AnswerDTO> updateAnswer(AnswerDTO dto) {
-        Objects.requireNonNull(dto.getId(), "Id is required");
-        dto.setUpdated(Instant.now());
+        //Objects.requireNonNull(dto.getId(), "Id is required");
+        dto.setDate(Instant.now());
         return  answerRepository
                 .save(mapperUtils.mapperToAnswer().apply(dto))
                 .onErrorResume(throwable -> Mono.error(throwable.getCause()))

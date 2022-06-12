@@ -45,17 +45,15 @@ class AddAnswerUseCaseTest {
         AnswerDTO answerDTO = new AnswerDTO("1234",
                 "1", "1",
                 "answer", 1,
-                Instant.now(), Instant.now()
+                Instant.now()
         );
-        answerDTO.setEmail("");
 
         Answer answer = new Answer();
         answer.setId("1234");
         answer.setQuestionId("1");
         answer.setAnswer("answer");
         answer.setPosition(1);
-        answer.setCreated(Instant.now());
-        answer.setUpdated(Instant.now());
+        answer.setDate(Instant.now());
 
         when(getUseCase.apply(Mockito.anyString())).thenReturn(Mono.just(questionDTO));
         when(answerRepository.save(Mockito.any(Answer.class))).thenReturn(Mono.just(answer));

@@ -3,11 +3,8 @@ package co.com.sofka.questions.usecases;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.reposioties.QuestionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,8 +45,8 @@ class UpdateUseCaseTest {
                 "1234",
                 "Tech",
                 "Software",
-                "¿Que es java?"
-        );
+                "¿Que es java?",
+                "email");
 
         when(updateUseCase.apply(Mockito.any(QuestionDTO.class))).thenReturn(Mono.just(questionDto.getId()));
 
