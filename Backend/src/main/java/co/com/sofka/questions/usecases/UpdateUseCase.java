@@ -38,10 +38,10 @@ public class UpdateUseCase implements SaveQuestion {
     public Mono<AnswerDTO> updateAnswer(AnswerDTO dto) {
         //Objects.requireNonNull(dto.getId(), "Id is required");
         Query query = new Query().addCriteria(Criteria.where("_id").is(dto.getId()));
-        Update update = new Update().set("answer", dto.getAnswer()).set("position", dto.getPosition());
+        Update update = new Update().set("answer", dto.getAnswer())
+                .set("position", dto.getPosition())
+                .set("date", Instant.now());
 
-
-        dto.setDate(Instant.now());
         return mongoTemplate.findAndModify(query, update, Answer.class)
                 .map(mapperUtils.mapEntityToAnswer());
     }
