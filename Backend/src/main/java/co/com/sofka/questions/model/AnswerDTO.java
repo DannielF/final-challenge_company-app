@@ -50,6 +50,10 @@ public class AnswerDTO {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getId() {
         return id;
     }
