@@ -48,4 +48,15 @@ class DeleteUseCaseTest {
         verify(questionRepository).deleteById(questionDTO.getId());
 
     }
+
+    @Test
+    @DisplayName("Delete an answer by its id")
+    void deleteAnswerById() {
+
+        when(answerRepository.deleteById(Mockito.anyString())).thenReturn(Mono.empty());
+
+        var answerToDelete = deleteUseCase.deleteAnswerById("1");
+
+        verify(answerRepository).deleteById("1");
+    }
 }
