@@ -41,6 +41,7 @@ export class QuestionService {
   }
 
   public saveQuestion(newQuestion: QuestionI): Observable<String> {
+    console.log(newQuestion);
     return this.http.post(`${this.url}/createQuestion`, newQuestion, {
       responseType: 'text',
     });

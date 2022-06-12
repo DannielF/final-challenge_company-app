@@ -8,4 +8,5 @@ export interface QuestionI {
     category:string;
     answers:[];
     start?:string;
+    email?: any
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -31,7 +32,8 @@ export class QuestionComponent implements OnInit {
     question: '',
     type: '',
     category: '',
-    answers:[]
+    answers:[],
+    email: ''
   };
 
   constructor(
@@ -40,7 +42,8 @@ export class QuestionComponent implements OnInit {
     private services: QuestionService,
     private toastr: ToastrService,
     private route: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {}
@@ -52,6 +55,10 @@ export class QuestionComponent implements OnInit {
   saveQuestion(question: QuestionI): void {
     if(question.type && question.category){    
      this.modalService.dismissAll();
+     this.afAuth.currentUser.then((user) => {
+     this.question.email = user?.email;
+     });
+
      this.services.saveQuestion(question).subscribe({
        next: (v) => {    
          if (v) {
@@ -61,7 +68,7 @@ export class QuestionComponent implements OnInit {
              
             });
             setTimeout(() => {
-            window.location.reload();
+            //window.location.reload();
           }, 2000);
         } else {
           
