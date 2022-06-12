@@ -1,41 +1,51 @@
 package co.com.sofka.questions.usecases;
 
+import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.reposioties.AnswerRepository;
 import co.com.sofka.questions.reposioties.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class DeleteUseCaseTest {
 
+    @MockBean
     QuestionRepository questionRepository;
+    @MockBean
     AnswerRepository answerRepository;
+    @SpyBean
     DeleteUseCase deleteUseCase;
-
-    @BeforeEach
-    public void setup() {
-        questionRepository = mock(QuestionRepository.class);
-        answerRepository = mock(AnswerRepository.class);
-        deleteUseCase = new DeleteUseCase(answerRepository,questionRepository);
-    }
 
     @Test
     @DisplayName("Delete a question by its id")
     void deleteQuestionById() {
 
-        when(questionRepository.deleteById("1")).thenReturn(Mono.empty());
+        var questionDTO = new QuestionDTO();
+        questionDTO.setId("1");
+        questionDTO.setUserId("1");
+        questionDTO.setType("tech");
+        questionDTO.setCategory("software");
+        questionDTO.setQuestion("¿Que es java?");
 
-        StepVerifier.create(deleteUseCase.apply("1"))
-                        .expectNext()
-                                .verifyComplete();
+        when(questionRepository.deleteById(Mockito.anyString())).thenReturn(Mono.empty());
 
+        var questionToDelete = deleteUseCase.apply(questionDTO.getId());
 
-        verify(questionRepository).deleteById("1");
+        verify(questionRepository).deleteById(questionDTO.getId());
+
     }
 }
