@@ -17,12 +17,14 @@ public class AnswerBody {
     @Min(1)
     @NotNull
     private Integer position;
+    private String email;
 
-    public AnswerBody(String userId, String questionId, String answer, Integer position) {
+    public AnswerBody(String userId, String questionId, String answer, Integer position, String email) {
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
+        this.email = email;
     }
 
     public String getUserId() {
@@ -55,6 +57,14 @@ public class AnswerBody {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
