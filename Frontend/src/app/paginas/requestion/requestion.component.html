@@ -91,7 +91,8 @@
           >
             <p style="margin-left: 3px">{{ questions.answer }}</p>
             <p style="margin-left: 3px">
-              Fecha actualización: {{ questions.date | date }}
+              Fecha actualización:
+              {{ questions.date | date: "MMM d, y, h:mm: a" }}
             </p>
             <ng-template #content let-modal>
               <div class="modal-body">

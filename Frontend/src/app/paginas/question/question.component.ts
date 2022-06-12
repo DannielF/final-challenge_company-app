@@ -66,7 +66,7 @@ export class QuestionComponent implements OnInit {
               summary: 'Se ha agregado la pregunta',
             });
             setTimeout(() => {
-              //window.location.reload();
+              window.location.reload();
             }, 2000);
           } else {
           }
