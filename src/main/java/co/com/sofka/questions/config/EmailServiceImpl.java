@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class EmailServiceImpl {
 
 
-    private static final String MESSAGE = "One question has been update click to see it. http://localhost:4200/question/";
+    private static final String MESSAGE = "One question has been update click to see it. https://login-fa586.web.app/question/";
     private static final String SUBJECT = "Someone has answer your question";
     private final JavaMailSender emailSender;
     Logger log = Logger.getLogger("EmailService");
