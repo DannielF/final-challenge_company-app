@@ -13,6 +13,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule} from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+
 // Componrtrd
 
 import { AppComponent } from './app.component';
@@ -53,7 +54,8 @@ import { RecuperarPasswordComponent } from './persona/recuperar-password/recuper
     PrimeNGModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'reto_sofka'),
     HttpClientModule,
     NgbModule,
     FormsModule,

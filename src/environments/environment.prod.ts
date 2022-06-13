@@ -1,9 +1,10 @@
+import { initializeApp } from "firebase/app";
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   firebaseConfig: {
     apiKey: "AIzaSyCDuaQFvcvB4pYH8vm6zLW7D-raw5-kfSI",
     authDomain: "login-fa586.firebaseapp.com",
@@ -22,3 +23,6 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+// Initialize Firebase
+const app = initializeApp(environment.firebaseConfig);
